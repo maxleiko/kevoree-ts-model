@@ -1,29 +1,39 @@
-import { JSONKevoreeLoader, Model, JSONKevoreeSerializer, Node, Group, Component, Binding, Channel, Port, NodeType, Namespace } from '../src';
+import {
+  JSONKevoreeLoader,
+  Model,
+  Node,
+  Group,
+  Component,
+  Binding,
+  Channel,
+  Port,
+  NodeType,
+  Namespace,
+} from '../src';
 
 describe('JSON loader/serializer', () => {
   const loader = new JSONKevoreeLoader();
-  const serializer = new JSONKevoreeSerializer();
 
   it('empty Model', () => {
     const model = new Model();
-    const modelStr = serializer.stringify(model);
-    expect(modelStr).toEqual(serializer.stringify(loader.parse(modelStr)));
+    const modelStr = JSON.stringify(model, null, 2);
+    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
   });
 
   it('Model with nodes', () => {
     const model = new Model();
     model.addNode(new Node().withName('node0'));
     model.addNode(new Node().withName('node1'));
-    const modelStr = serializer.stringify(model);
-    expect(modelStr).toEqual(serializer.stringify(loader.parse(modelStr)));
+    const modelStr = JSON.stringify(model, null, 2);
+    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
   });
 
   it('Model with groups', () => {
     const model = new Model();
     model.addGroup(new Group().withName('group0'));
     model.addGroup(new Group().withName('group1'));
-    const modelStr = serializer.stringify(model);
-    expect(modelStr).toEqual(serializer.stringify(loader.parse(modelStr)));
+    const modelStr = JSON.stringify(model, null, 2);
+    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
   });
 
   it('Model with refs', () => {
@@ -36,8 +46,8 @@ describe('JSON loader/serializer', () => {
     ns0.addTdef(tdef1);
     model.addNode(new Node().withName('node0').withTdef(tdef0));
     model.addNode(new Node().withName('node1').withTdef(tdef1));
-    const modelStr = serializer.stringify(model);
-    expect(modelStr).toEqual(serializer.stringify(loader.parse(modelStr)));
+    const modelStr = JSON.stringify(model, null, 2);
+    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
   });
 
   it('Model with bindings', () => {
@@ -46,15 +56,14 @@ describe('JSON loader/serializer', () => {
     const comp0 = new Component().withName('comp0');
     const port0 = new Port().withName('out');
     const chan0 = new Channel().withName('chan0');
+    const bind0 = new Binding().withChannelAndPort(chan0, port0);
     model.addNode(node0);
     node0.addComponent(comp0);
     comp0.addOutput(port0);
     model.addChannel(chan0);
-    const bind0 = new Binding().withChannelAndPort(chan0, port0);
-    // port0.addBinding(bind0);
-    // chan0.addBinding(bind0);
-    const modelStr = serializer.stringify(model);
-    expect(modelStr).toEqual(serializer.stringify(loader.parse(modelStr)));
-    // console.log(serializer.stringify(model, 2));
+    model.addBinding(bind0);
+    const modelStr = JSON.stringify(model, null, 2);
+    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
+    console.log(JSON.stringify(model, null, 2));
   });
 });

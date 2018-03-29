@@ -2,6 +2,8 @@ import { observable, computed, action } from 'mobx';
 
 import { Named } from './Named';
 import { Namespace } from './Namespace';
+import { JSONObject } from '.';
+import { KevoreeFactory } from '..';
 
 export class DeployUnit extends Named<Namespace> {
 
@@ -50,6 +52,19 @@ export class DeployUnit extends Named<Namespace> {
   @action withPlatform(platform: string): this {
     this._platform = platform;
     return this;
+  }
+
+  fromJSON(data: JSONObject, _factory: KevoreeFactory) {
+    super.fromJSON(data, _factory);
+    if (data.hash) {
+      this._hash = data.hash as string;
+    }
+    if (data.version) {
+      this._version = data.version as string;
+    }
+    if (data.platform) {
+      this._platform = data.platform as string;
+    }
   }
 
   get _className(): string {

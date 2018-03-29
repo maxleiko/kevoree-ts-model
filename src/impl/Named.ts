@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx';
 
-import { Element } from './Element';
+import { Element, JSONObject } from './Element';
 import { KevoreeFactory } from '../tools/KevoreeFactory';
 
 export abstract class Named<P extends Element<any>> extends Element<P> {
@@ -24,8 +24,10 @@ export abstract class Named<P extends Element<any>> extends Element<P> {
     this._name = name;
   }
 
-  fromJSON(data: { [s: string]: any }, factory: KevoreeFactory) {
-    this._name = data.name;
+  fromJSON(data: JSONObject, _factory: KevoreeFactory) {
+    if (data.name) {
+      this._name = data.name as string;
+    }
   }
 
   get _className(): string {

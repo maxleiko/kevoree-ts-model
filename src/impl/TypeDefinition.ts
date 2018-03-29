@@ -3,7 +3,8 @@ import { observable, computed, action } from 'mobx';
 import { Named } from './Named';
 import { Namespace } from './Namespace';
 import { DeployUnit } from './DeployUnit';
-import { ParamType } from '.';
+import { ParamType, JSONObject } from '.';
+import { KevoreeFactory } from '../tools/KevoreeFactory';
 
 export abstract class TypeDefinition extends Named<Namespace> {
 
@@ -56,6 +57,24 @@ export abstract class TypeDefinition extends Named<Namespace> {
     this.name = name;
     this._version = version;
     return this;
+  }
+
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
+    super.fromJSON(data, factory);
+    if ('version' in data) {
+      this._version = data.version as number;
+    }
+
+    if (data.dictionary) {
+      const dictionary = data.dictionary as { [s: string]: any };
+      Object.keys(dictionary).forEach((key) => {
+        const p = factory.createParamType<this>();
+        p.parent = this;
+        p.refInParent = 'dictionary';
+        p.fromJSON(dictionary[key], factory);
+        this.addParamType(p);
+      });
+    }
   }
 
   get _className(): string {

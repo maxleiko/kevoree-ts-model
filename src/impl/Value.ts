@@ -1,7 +1,8 @@
 import { observable, action } from 'mobx';
 
-import { Element } from './Element';
+import { Element, JSONObject } from './Element';
 import { Named } from './Named';
+import { KevoreeFactory } from '../tools/KevoreeFactory';
 
 export class Value<P extends Element<any>> extends Named<P> {
 
@@ -18,6 +19,13 @@ export class Value<P extends Element<any>> extends Named<P> {
   @action withValue(val: string): this {
     this._value = val;
     return this;
+  }
+
+  fromJSON(data: JSONObject, _factory: KevoreeFactory) {
+    super.fromJSON(data, _factory);
+    if (data.value) {
+      this._value = data.value as string;
+    }
   }
 
   get _className(): string {

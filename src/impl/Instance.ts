@@ -1,7 +1,7 @@
 import { observable, action, computed } from 'mobx';
 
 import { Named } from './Named';
-import { Element } from './Element';
+import { Element, JSONObject } from './Element';
 import { TypeDefinition } from './TypeDefinition';
 import { Value } from './Value';
 import { KevoreeFactory } from '../tools/KevoreeFactory';
@@ -53,18 +53,34 @@ export abstract class Instance<
     return this;
   }
 
-  toJSON(key: any): { [s: string]: any } {
-    const o = super.toJSON(key);
+  toJSON(_key?: any): { [s: string]: any } {
+    const o = super.toJSON(_key);
     if (this._tdef) {
       o.tdef = this._tdef.path;
     }
     return o;
   }
 
-  fromJSON(data: { [s: string]: any }, factory: KevoreeFactory) {
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
-    this._started = data.started;
-    // TODO refs?
+    if ('started' in data) {
+      this._started = data.started as boolean;
+    }
+    if (data.tdef) {
+      const tdef = this.parent!.getByPath(data.tdef as string) as T | null;
+      if (tdef) {
+        this._tdef = tdef;
+      }
+    }
+    if (data.params) {
+      const params = data.params as { [s: string]: any };
+      Object.keys(params).forEach((key) => {
+        const p = (factory as any)[`create${params[key]._className}`]();
+        p.parent = this;
+        p.fromJSON(data, factory);
+        this.addParam(p);
+      });
+    }
   }
 
   get _className(): string {

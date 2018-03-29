@@ -4,6 +4,7 @@ import { Named } from './Named';
 import { Component } from './Component';
 import { Binding } from './Binding';
 import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { JSONObject } from '.';
 
 export class Port extends Named<Component> {
 
@@ -26,9 +27,17 @@ export class Port extends Named<Component> {
     return o;
   }
 
-  fromJSON(data: { [s: string]: any }, factory: KevoreeFactory) {
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
-    // TODO refs?
+    if (data.bindings) {
+      const bindings = data.bindings as string[];
+      bindings.forEach((path) => {
+        const binding = this.parent!.getByPath(path) as Binding | null;
+        if (binding) {
+          this.addBinding(binding);
+        }
+      });
+    }
   }
 
   get _className(): string {

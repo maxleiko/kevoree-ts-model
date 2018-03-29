@@ -7,7 +7,6 @@ import { DeployUnit } from '../impl/DeployUnit';
 import { Element } from '../impl/Element';
 import { Group } from '../impl/Group';
 import { GroupType } from '../impl/GroupType';
-import { Instance } from '../impl/Instance';
 import { Namespace } from '../impl/Namespace';
 import { Model } from '../impl/Model';
 import { Node } from '../impl/Node';
@@ -17,6 +16,7 @@ import { Port } from '../impl/Port';
 import { PortType } from '../impl/PortType';
 import { Value } from '../impl/Value';
 import { KevoreeFactory } from './KevoreeFactory';
+import { TypeDefinition } from '..';
 
 export class DefaultKevoreeFactory implements KevoreeFactory {
   createBinding(): Binding {
@@ -55,8 +55,8 @@ export class DefaultKevoreeFactory implements KevoreeFactory {
   createNodeType(): NodeType {
     return new NodeType();
   }
-  createParamType(): ParamType {
-    return new ParamType();
+  createParamType<P extends TypeDefinition = TypeDefinition>(): ParamType<P> {
+    return new ParamType<P>();
   }
   createPort(): Port {
     return new Port();

@@ -1,11 +1,13 @@
 import { observable, computed } from 'mobx';
 
 import { Named } from './Named';
-import { Element } from './Element';
+import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { TypeDefinition } from './TypeDefinition';
+import { JSONObject } from './Element';
 
 export type DataType = 'BYTE' | 'SHORT' | 'INT' | 'LONG' | 'FLOAT' | 'DOUBLE' | 'BOOLEAN' | 'CHAR' | 'STRING';
 
-export class ParamType<P extends Element<any> = Element<any>> extends Named<P> {
+export class ParamType<P extends TypeDefinition = TypeDefinition> extends Named<P> {
 
   @observable private _fragmentDependant: boolean = false;
   @observable private _datatype: DataType = 'STRING';
@@ -31,10 +33,16 @@ export class ParamType<P extends Element<any> = Element<any>> extends Named<P> {
     return this._defaultValue;
   }
 
-  fromJSON(data: { [s: string]: any }) {
-    this._fragmentDependant = data.fragmentDependant;
-    this._datatype = data.datatype;
-    this._defaultValue = data.defaultValue;
+  fromJSON(data: JSONObject, _factory: KevoreeFactory) {
+    if ('fragmentDependant' in data) {
+      this._fragmentDependant = data.fragmentDependant as boolean;
+    }
+    if ('datatype' in data) {
+      this._datatype = data.datatype as DataType;
+    }
+    if ('defaultValue' in data) {
+      this._defaultValue = data.defaultValue as string;
+    }
   }
 
   get _className(): string {

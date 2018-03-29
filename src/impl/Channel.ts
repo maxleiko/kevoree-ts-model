@@ -5,6 +5,7 @@ import { Instance } from './Instance';
 import { Binding } from './Binding';
 import { ChannelType } from './ChannelType';
 import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { JSONObject } from '.';
 
 export class Channel extends Instance<ChannelType, Model> {
 
@@ -27,9 +28,17 @@ export class Channel extends Instance<ChannelType, Model> {
     return o;
   }
 
-  fromJSON(data: { [s: string]: any }, factory: KevoreeFactory) {
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
-    // TODO how to handle refs?
+    if (data.bindings) {
+      const bindings = data.bindings as string[];
+      bindings.forEach((path) => {
+        const binding = this.parent!.getByPath(path) as Binding | null;
+        if (binding) {
+          this.addBinding(binding);
+        }
+      });
+    }
   }
 
   get _className(): string {

@@ -1,11 +1,11 @@
 import { observable, computed, action } from 'mobx';
 
 import { hash } from '../utils';
-import { Element } from './Element';
+import { Element, JSONObject } from './Element';
 import { Channel } from './Channel';
 import { Port } from './Port';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
 import { Model } from './Model';
+import { KevoreeFactory } from '../tools/KevoreeFactory';
 
 export class Binding extends Element<Model> {
 
@@ -44,8 +44,30 @@ export class Binding extends Element<Model> {
     return this;
   }
 
-  fromJSON(data: { [s: string]: any }, factory: KevoreeFactory) {
-    // TODO how to handle refs?
+  toJSON() {
+    const o = super.toJSON();
+    if (this._channel) {
+      o.channel = this._channel.path;
+    }
+    if (this._port) {
+      o.port = this._port.path;
+    }
+    return o;
+  }
+
+  fromJSON(data: JSONObject, _factory: KevoreeFactory) {
+    if (data.channel) {
+      const c = this.parent!.getByPath(data.channel as string) as Channel | null;
+      if (c) {
+        this._channel = c;
+      }
+    }
+    if (data.port) {
+      const p = this.parent!.getByPath(data.port as string) as Port | null;
+      if (p) {
+        this._port = p;
+      }
+    }
   }
 
   get _className(): string {

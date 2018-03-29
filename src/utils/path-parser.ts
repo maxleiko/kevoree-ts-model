@@ -171,14 +171,17 @@ export function parse(input: string, options: any = {}) {
     peg$startRuleFunction = peg$startRuleFunctions[options.startRule];
   }
 
+  // @ts-ignore
   function text() {
     return input.substring(peg$savedPos, peg$currPos);
   }
 
+  // @ts-ignore
   function location() {
     return peg$computeLocation(peg$savedPos, peg$currPos);
   }
 
+  // @ts-ignore
   function expected(description: any, l: any) {
     l = l !== void 0 ? l : peg$computeLocation(peg$savedPos, peg$currPos);
 
@@ -189,6 +192,7 @@ export function parse(input: string, options: any = {}) {
     );
   }
 
+  // @ts-ignore
   function error(message: any, l: any) {
     l = l !== void 0 ? l : peg$computeLocation(peg$savedPos, peg$currPos);
 
@@ -203,6 +207,7 @@ export function parse(input: string, options: any = {}) {
     return { type: 'class', parts, inverted, ignoreCase };
   }
 
+  // @ts-ignore
   function peg$anyExpectation() {
     return { type: 'any' };
   }

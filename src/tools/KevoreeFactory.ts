@@ -15,6 +15,7 @@ import { ParamType } from '../impl/ParamType';
 import { Port } from '../impl/Port';
 import { PortType } from '../impl/PortType';
 import { Value } from '../impl/Value';
+import { TypeDefinition } from '../impl/TypeDefinition';
 
 export interface KevoreeFactory {
   createBinding(): Binding;
@@ -29,7 +30,7 @@ export interface KevoreeFactory {
   createModel(): Model;
   createNode(): Node;
   createNodeType(): NodeType;
-  createParamType(): ParamType;
+  createParamType<P extends TypeDefinition = TypeDefinition>(): ParamType<P>;
   createPort(): Port;
   createPortType(): PortType;
   createValue<P extends Element<any>>(): Value<P>;

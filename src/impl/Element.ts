@@ -4,6 +4,10 @@ import { Value } from './Value';
 import { parse } from '../utils/path-parser';
 import { KevoreeFactory } from '../tools/KevoreeFactory';
 
+export interface JSONObject {
+  [s: string]: undefined | null | string | number | boolean | object;
+}
+
 export abstract class Element<P extends Element<any> | null = null> {
   
   @observable private _refInParent: string | null = null;
@@ -69,29 +73,23 @@ export abstract class Element<P extends Element<any> | null = null> {
     return null;
   }
 
-  toJSON(key?: any): { [s: string]: any } {
-    const clone: any = {
-      _className: this._className
-    };
-    for (const prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        clone[prop.substr(1)] = (this as any)[prop];
+  toJSON(_key?: any): { [s: string]: any } {
+    const self = this as any;
+    const clone: any = { _className: this._className };
+    // clone all properties
+    for (const prop in self) {
+      if (self.hasOwnProperty(prop)) {
+        clone[prop.substr(1)] = self[prop];
       }
     }
-
-    if (clone.parent) {
-      clone.parent = clone.parent.path;
-    } else {
-      delete clone.parent;
-    }
+    // clean model
+    delete clone.parent;
     delete clone.refInParent;
-    if (key) {
-      clone._key = key;
-    }
+    
     return clone;
   }
 
-  abstract fromJSON(data: { [s: string]: any }, factory: KevoreeFactory): void;
+  abstract fromJSON(data: JSONObject, _factory: KevoreeFactory): void;
   abstract get _key(): string | null;
 
   private _getByGraph(graph: Array<{ [s: string]: any }>): Element<any> | null {

@@ -5,21 +5,24 @@ import { Instance } from './Instance';
 import { Port } from './Port';
 import { ComponentType } from './ComponentType';
 import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { JSONObject } from '.';
 
 export class Component extends Instance<ComponentType, Node> {
-
   @observable private _inputs: Map<string, Port> = new Map();
   @observable private _outputs: Map<string, Port> = new Map();
 
-  @computed get inputs(): Port[] {
+  @computed
+  get inputs(): Port[] {
     return Array.from(this._inputs.values());
   }
 
-  @computed get outputs(): Port[] {
+  @computed
+  get outputs(): Port[] {
     return Array.from(this._outputs.values());
   }
 
-  @action addInput(port: Port) {
+  @action
+  addInput(port: Port) {
     if (!port._key) {
       throw new Error(`Cannot add port in ${this._key}: port key is not set`);
     }
@@ -28,7 +31,8 @@ export class Component extends Instance<ComponentType, Node> {
     port.refInParent = 'inputs';
   }
 
-  @action addOutput(port: Port) {
+  @action
+  addOutput(port: Port) {
     if (port._key) {
       this._outputs.set(port._key, port);
     }
@@ -36,18 +40,29 @@ export class Component extends Instance<ComponentType, Node> {
     port.refInParent = 'outputs';
   }
 
-  fromJSON(data: { [s: string]: any }, factory: KevoreeFactory) {
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
-    Object.keys(data.inputs).forEach((key) => {
-      const port = factory.createPort();
-      port.fromJSON(data.inputs[key], factory);
-      this.addInput(port);
-    });
-    Object.keys(data.outputs).forEach((key) => {
-      const port = factory.createPort();
-      port.fromJSON(data.outputs[key], factory);
-      this.addOutput(port);
-    });
+    if (data.inputs) {
+      const inputs = data.inputs as { [s: string]: any };
+      Object.keys(inputs).forEach((key) => {
+        const port = factory.createPort();
+        port.parent = this;
+        port.refInParent = 'inputs';
+        port.fromJSON(inputs[key], factory);
+        this.addInput(port);
+      });
+    }
+
+    if (data.outputs) {
+      const outputs = data.outputs as { [s: string]: any };
+      Object.keys(outputs).forEach((key) => {
+        const port = factory.createPort();
+        port.parent = this;
+        port.refInParent = 'outputs';
+        port.fromJSON(outputs[key], factory);
+        this.addOutput(port);
+      });
+    }
   }
 
   get _className(): string {

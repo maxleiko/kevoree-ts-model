@@ -5,6 +5,7 @@ import { Instance } from './Instance';
 import { Node } from './Node';
 import { GroupType } from './GroupType';
 import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { JSONObject } from '.';
 
 export class Group extends Instance<GroupType, Model> {
 
@@ -28,8 +29,17 @@ export class Group extends Instance<GroupType, Model> {
     return o;
   }
 
-  fromJSON(data: { [s: string]: any }, factory: KevoreeFactory) {
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
+    if (data.nodes) {
+      const nodes = data.nodes as string[];
+      nodes.forEach((path) => {
+        const node = this.parent!.getByPath(path) as Node | null;
+        if (node) {
+          this.attachNode(node);
+        }
+      });
+    }
   }
 
   get _className(): string {

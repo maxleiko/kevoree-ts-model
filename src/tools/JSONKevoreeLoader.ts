@@ -22,6 +22,8 @@ export class JSONKevoreeLoader implements KevoreeLoader {
 
   parseFromKMF(data: string): Element<any> | null {
     const o = JSON.parse(data);
+    // tslint:disable-next-line
+    console.warn('TODO: parseFromKMF(...) is not implemented yet', o);
     // TODO
     return null;
   }

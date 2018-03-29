@@ -6,6 +6,7 @@ import { Instance } from './Instance';
 import { NodeType } from './NodeType';
 import { Group } from './Group';
 import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { JSONObject } from '.';
 
 export class Node extends Instance<NodeType, Model> {
 
@@ -54,22 +55,41 @@ export class Node extends Instance<NodeType, Model> {
     return this._components.get(name);
   }
 
-  fromJSON(data: { [s: string]: any }, factory: KevoreeFactory) {
+  toJSON() {
+    const o = super.toJSON();
+    o.groups = this.groups.map((g) => g.path);
+    return o;
+  }
+
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
     if (data.tdef) {
-      // tslint:disable-next-line
-      console.log(` PATH>${data.tdef}`);
-      const tdef = this.parent!.getByPath(data.tdef);
+      const tdef = this.parent!.getByPath(data.tdef as string);
       if (tdef && tdef instanceof NodeType) {
         this.tdef = tdef;
       }
     }
 
-    Object.keys(data.components).forEach((key) => {
-      const comp = factory.createComponent();
-      comp.fromJSON(data.components[key], factory);
-      this.addComponent(comp);
-    });
+    if (data.components) {
+      const components = data.components as { [s: string]: any };
+      Object.keys(components).forEach((key) => {
+        const comp = factory.createComponent();
+        comp.parent = this;
+        comp.refInParent = 'components';
+        comp.fromJSON(components[key], factory);
+        this.addComponent(comp);
+      });
+    }
+
+    if (data.groups) {
+      const groups = data.groups as string[];
+      groups.forEach((path) => {
+        const group = this.parent!.getByPath(path) as Group | null;
+        if (group) {
+          this.attachGroup(group);
+        }
+      });
+    }
   }
 
   get _className(): string {
