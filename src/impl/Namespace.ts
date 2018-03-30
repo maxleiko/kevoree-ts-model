@@ -4,7 +4,7 @@ import { Named } from './Named';
 import { Model } from './Model';
 import { TypeDefinition } from './TypeDefinition';
 import { DeployUnit } from './DeployUnit';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class Namespace extends Named<Model> {

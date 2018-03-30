@@ -1,7 +1,7 @@
 import { observable, computed } from 'mobx';
 
 import { Named } from './Named';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { TypeDefinition } from './TypeDefinition';
 import { JSONObject } from './Element';
 
@@ -33,7 +33,12 @@ export class ParamType<P extends TypeDefinition = TypeDefinition> extends Named<
     return this._defaultValue;
   }
 
+  set defaultValue(defaultValue: string | null) {
+    this._defaultValue = defaultValue;
+  }
+
   fromJSON(data: JSONObject, _factory: KevoreeFactory) {
+    super.fromJSON(data, _factory);
     if ('fragmentDependant' in data) {
       this._fragmentDependant = data.fragmentDependant as boolean;
     }

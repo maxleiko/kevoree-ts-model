@@ -1,0 +1,17 @@
+{
+  "_className": "NodeType",
+  "metas": {},
+  "name": "JavaNode",
+  "version": 2,
+  "deployUnits": {},
+  "dictionary": {
+    "log": {
+      "_className": "ParamType",
+      "metas": {},
+      "name": "log",
+      "fragmentDependant": false,
+      "datatype": "STRING",
+      "defaultValue": "INFO"
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { Model } from './Model';
 import { Instance } from './Instance';
 import { Binding } from './Binding';
 import { ChannelType } from './ChannelType';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class Channel extends Instance<ChannelType, Model> {

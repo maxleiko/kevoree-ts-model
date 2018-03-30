@@ -4,7 +4,7 @@ import { Model } from './Model';
 import { Instance } from './Instance';
 import { Node } from './Node';
 import { GroupType } from './GroupType';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class Group extends Instance<GroupType, Model> {

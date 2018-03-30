@@ -2,7 +2,7 @@ import { computed, observable, action } from 'mobx';
 
 import { TypeDefinition } from './TypeDefinition';
 import { PortType } from './PortType';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class ComponentType extends TypeDefinition {

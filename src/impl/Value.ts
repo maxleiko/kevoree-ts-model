@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 
 import { Element, JSONObject } from './Element';
 import { Named } from './Named';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 
 export class Value<P extends Element<any>> extends Named<P> {
 

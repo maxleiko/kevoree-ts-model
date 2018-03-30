@@ -5,7 +5,7 @@ import { Component } from './Component';
 import { Instance } from './Instance';
 import { NodeType } from './NodeType';
 import { Group } from './Group';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class Node extends Instance<NodeType, Model> {

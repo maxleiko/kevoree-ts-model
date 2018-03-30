@@ -1,9 +1,9 @@
 import { observable, action, computed } from 'mobx';
 
 import { Element, JSONObject } from './Element';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 
-export abstract class Named<P extends Element<any>> extends Element<P> {
+export abstract class Named<P extends Element<any> = Element<any>> extends Element<P> {
 
   @observable private _name: string | null = null;
 

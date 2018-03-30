@@ -1,0 +1,27 @@
+{
+  "class": "org.kevoree.NodeType@name=JavaNode,version=2",
+  "name": "JavaNode",
+  "abstract": "false",
+  "version": "2",
+  "deployUnits": [],
+  "superTypes": [],
+  "dictionaryType": [
+    {
+      "class": "org.kevoree.DictionaryType@0.0",
+      "generated_KMF_ID": "0.0",
+      "attributes": [
+        {
+          "class": "org.kevoree.DictionaryAttribute@log",
+          "datatype": "STRING",
+          "defaultValue": "INFO",
+          "name": "log",
+          "fragmentDependant": "false",
+          "optional": "true",
+          "state": "false",
+          "genericTypes": []
+        }
+      ]
+    }
+  ],
+  "metaData": []
+}

@@ -9,6 +9,7 @@ import {
   Port,
   NodeType,
   Namespace,
+  ParamType,
 } from '../src';
 
 describe('JSON loader/serializer', () => {
@@ -41,6 +42,11 @@ describe('JSON loader/serializer', () => {
     const ns0 = new Namespace().withName('ns0');
     const tdef0 = new NodeType().withNameAndVersion('JavaNode', 1);
     const tdef1 = new NodeType().withNameAndVersion('JavascriptNode', 1);
+    const param0 = new ParamType().withName('log');
+    param0.datatype = 'STRING';
+    param0.defaultValue = 'INFO';
+    param0.fragmentDependant = false;
+    tdef0.addParamType(param0);
     model.addNamespace(ns0);
     ns0.addTdef(tdef0);
     ns0.addTdef(tdef1);
@@ -64,6 +70,5 @@ describe('JSON loader/serializer', () => {
     model.addBinding(bind0);
     const modelStr = JSON.stringify(model, null, 2);
     expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
-    console.log(JSON.stringify(model, null, 2));
   });
 });

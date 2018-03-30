@@ -3,7 +3,7 @@ import { observable, computed, action } from 'mobx';
 import { Named } from './Named';
 import { Component } from './Component';
 import { Binding } from './Binding';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class Port extends Named<Component> {

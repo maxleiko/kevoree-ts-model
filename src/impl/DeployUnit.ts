@@ -3,7 +3,7 @@ import { observable, computed, action } from 'mobx';
 import { Named } from './Named';
 import { Namespace } from './Namespace';
 import { JSONObject } from '.';
-import { KevoreeFactory } from '..';
+import { KevoreeFactory } from '../factory';
 
 export class DeployUnit extends Named<Namespace> {
 

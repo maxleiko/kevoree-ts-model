@@ -4,18 +4,21 @@ import { Named } from './Named';
 import { Element, JSONObject } from './Element';
 import { TypeDefinition } from './TypeDefinition';
 import { Value } from './Value';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory/KevoreeFactory';
+import { createTransformer } from 'mobx-utils';
 
 export abstract class Instance<
   T extends TypeDefinition = TypeDefinition,
   P extends Element<any> = Element<any>
 > extends Named<P> {
+  getParam = createTransformer<string, Value<this> | undefined>((name) => this._params.get(name));
 
   @observable private _started: boolean = false;
   @observable private _tdef: T | null = null;
   @observable private _params: Map<string, Value<this>> = new Map();
 
-  @computed get tdef(): T | null {
+  @computed
+  get tdef(): T | null {
     return this._tdef;
   }
 
@@ -23,7 +26,8 @@ export abstract class Instance<
     this._tdef = tdef;
   }
 
-  @computed get started() {
+  @computed
+  get started() {
     return this._started;
   }
 
@@ -31,11 +35,13 @@ export abstract class Instance<
     this._started = started;
   }
 
-  @computed get params(): Array<Value<this>> {
+  @computed
+  get params(): Array<Value<this>> {
     return Array.from(this._params.values());
   }
 
-  @action addParam(param: Value<this>) {
+  @action
+  addParam(param: Value<this>) {
     if (!param._key) {
       throw new Error(`Cannot add param in ${this._key}: param key is not set`);
     }
@@ -44,11 +50,8 @@ export abstract class Instance<
     param.refInParent = 'dictionary';
   }
 
-  getParam(name: string) {
-    return this._params.get(name);
-  }
-
-  @action withTdef(tdef: T | null): this {
+  @action
+  withTdef(tdef: T | null): this {
     this._tdef = tdef;
     return this;
   }
@@ -61,6 +64,7 @@ export abstract class Instance<
     return o;
   }
 
+  @action
   fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
     if ('started' in data) {

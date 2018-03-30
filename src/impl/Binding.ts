@@ -5,7 +5,8 @@ import { Element, JSONObject } from './Element';
 import { Channel } from './Channel';
 import { Port } from './Port';
 import { Model } from './Model';
-import { KevoreeFactory } from '../tools/KevoreeFactory';
+import { KevoreeFactory } from '../factory';
+import { KevoreeVisitor } from '../visitor';
 
 export class Binding extends Element<Model> {
 
@@ -68,6 +69,10 @@ export class Binding extends Element<Model> {
         this._port = p;
       }
     }
+  }
+
+  visit(visitor: KevoreeVisitor): void {
+    visitor.visitBinding(this);
   }
 
   get _className(): string {
