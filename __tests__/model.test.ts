@@ -1,6 +1,6 @@
 import { Model, Node, Group, Channel, Namespace } from '../src';
 
-describe('Model', () =>  {
+describe('Model', () => {
   it('should create an empty model', () => {
     const model = new Model();
     expect(model.nodes.length).toEqual(0);

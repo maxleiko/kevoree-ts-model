@@ -1,6 +1,6 @@
 import { parse, SyntaxError } from '../src/utils/path-parser';
 
-describe('Path', () =>  {
+describe('Path', () => {
   it('should parse "/"', () => {
     const g = parse('/');
     expect(g.length).toBe(0);
