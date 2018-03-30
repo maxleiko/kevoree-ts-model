@@ -13,7 +13,7 @@ export abstract class Named<P extends Element<any> = Element<any>> extends Eleme
 
   @action
   withName(name: string): this {
-    this._name = name;
+    this.name = name;
     return this;
   }
 
@@ -23,6 +23,9 @@ export abstract class Named<P extends Element<any> = Element<any>> extends Eleme
   }
 
   set name(name: string | null) {
+    if (!name) {
+      throw new Error('Name key cannot be null');
+    }
     this._name = name;
   }
 

@@ -6,7 +6,7 @@ import { TypeDefinition } from './TypeDefinition';
 import { Value } from './Value';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { createTransformer } from 'mobx-utils';
-import { keyUpdater } from '../utils';
+import { keyUpdater, autoRemove } from '../utils';
 
 export abstract class Instance<
   T extends TypeDefinition = TypeDefinition,
@@ -25,6 +25,9 @@ export abstract class Instance<
 
   set tdef(tdef: T | null) {
     this._tdef = tdef;
+    if (tdef) {
+      autoRemove<Instance>(tdef, this, 'tdef');
+    }
   }
 
   @computed
@@ -54,7 +57,7 @@ export abstract class Instance<
 
   @action
   withTdef(tdef: T | null): this {
-    this._tdef = tdef;
+    this.tdef = tdef;
     return this;
   }
 

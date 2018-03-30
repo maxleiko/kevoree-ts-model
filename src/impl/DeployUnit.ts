@@ -44,19 +44,19 @@ export class DeployUnit extends Named<Namespace> {
 
   @action
   withHash(hash: string): this {
-    this._hash = hash;
+    this.hash = hash;
     return this;
   }
 
   @action
   withVersion(version: string): this {
-    this._version = version;
+    this.version = version;
     return this;
   }
 
   @action
   withPlatform(platform: string): this {
-    this._platform = platform;
+    this.platform = platform;
     return this;
   }
 

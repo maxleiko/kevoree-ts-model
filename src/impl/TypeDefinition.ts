@@ -31,6 +31,9 @@ export abstract class TypeDefinition extends Named<Namespace> {
   }
 
   set version(version: number | null) {
+    if (!version) {
+      throw new Error(`TypeDefinition version cannot be null`);
+    }
     this._version = version;
   }
 
@@ -58,14 +61,14 @@ export abstract class TypeDefinition extends Named<Namespace> {
 
   @action
   withVersion(version: number): this {
-    this._version = version;
+    this.version = version;
     return this;
   }
 
   @action
   withNameAndVersion(name: string, version: number): this {
     this.name = name;
-    this._version = version;
+    this.version = version;
     return this;
   }
 

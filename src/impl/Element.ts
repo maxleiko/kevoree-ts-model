@@ -14,6 +14,7 @@ export abstract class Element<P extends Element<any> | null = null> {
 
   @observable private _refInParent: string | null = null;
   @observable private _parent: P | null = null;
+  @observable private _deleting: boolean = false;
   @observable private _metas: Map<string, Value<this>> = new Map();
 
   @computed
@@ -50,6 +51,15 @@ export abstract class Element<P extends Element<any> | null = null> {
   }
 
   @computed
+  get deleting(): boolean {
+    return this._deleting;
+  }
+
+  set deleting(deleting: boolean) {
+    this._deleting = deleting;
+  }
+
+  @computed
   get metas(): Map<string, any> {
     return this._metas;
   }
@@ -79,17 +89,27 @@ export abstract class Element<P extends Element<any> | null = null> {
     // clean model
     delete clone.parent;
     delete clone.refInParent;
+    delete clone.deleting;
 
     return clone;
   }
 
-  // @action
-  // delete() {
-  //   if (this._parent && this._refInParent) {
-  //     const parent: any = this._parent;
-  //     parent[`_${this._refInParent}`].delete(this._key);
-  //   }
-  // }
+  @action
+  delete() {
+    this._deleting = true;
+    if (this._parent && this._refInParent) {
+      const parent: any = this._parent;
+      const map: Map<string, this> = parent[`_${this._refInParent}`];
+      if (!map) {
+        // this is a severe error that implies a bug in this library!
+        throw new Error(`Unable to find map "${this._refInParent}" in parent "${parent._key}"`);
+      }
+      if (!this._key) {
+        throw new Error('Cannot delete element from parent: current key is null');
+      }
+      map.delete(this._key);
+    }
+  }
 
   abstract fromJSON(data: JSONObject, _factory: KevoreeFactory): void;
   abstract get _key(): string | null;

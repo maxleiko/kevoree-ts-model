@@ -1,4 +1,4 @@
-import { observable, action, computed, reaction } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 
 import { Element, JSONObject } from './Element';

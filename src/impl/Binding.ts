@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx';
 
-import { hash } from '../utils';
+import { hash, autoRemove } from '../utils';
 import { Element, JSONObject } from './Element';
 import { Channel } from './Channel';
 import { Port } from './Port';
@@ -18,6 +18,9 @@ export class Binding extends Element<Model> {
 
   set channel(chan: Channel | null) {
     this._channel = chan;
+    if (chan) {
+      autoRemove<Binding>(chan, this, 'channel');
+    }
   }
 
   @computed
@@ -27,6 +30,9 @@ export class Binding extends Element<Model> {
 
   set port(port: Port | null) {
     this._port = port;
+    if (port) {
+      autoRemove<Binding>(port, this, 'port');
+    }
   }
 
   @computed
@@ -42,8 +48,8 @@ export class Binding extends Element<Model> {
 
   @action
   withChannelAndPort(channel: Channel, port: Port): this {
-    this._channel = channel;
-    this._port = port;
+    this.channel = channel;
+    this.port = port;
     return this;
   }
 

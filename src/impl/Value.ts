@@ -18,7 +18,7 @@ export class Value<P extends Element<any>> extends Named<P> {
 
   @action
   withValue(val: string): this {
-    this._value = val;
+    this.value = val;
     return this;
   }
 
