@@ -8,10 +8,10 @@ import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class Group extends Instance<GroupType, Model> {
-
   @observable private _nodes: Map<string, Node> = new Map();
 
-  @action attachNode(node: Node) {
+  @action
+  attachNode(node: Node) {
     if (!node._key) {
       throw new Error(`Cannot attach node in ${this._key}: node key is not set`);
     }
@@ -19,7 +19,8 @@ export class Group extends Instance<GroupType, Model> {
     // TODO attach group also
   }
 
-  @computed get nodes(): Node[] {
+  @computed
+  get nodes(): Node[] {
     return Array.from(this._nodes.values());
   }
 

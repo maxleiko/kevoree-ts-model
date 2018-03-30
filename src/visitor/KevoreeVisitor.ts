@@ -16,7 +16,7 @@ import {
   DeployUnit,
   TypeDefinition,
   Named,
-  Element
+  Element,
 } from '../impl';
 
 export interface KevoreeVisitor {

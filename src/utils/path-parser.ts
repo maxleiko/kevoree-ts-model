@@ -39,7 +39,7 @@ function buildMessage(expected: any, found: any) {
 
     other: (expectation: any) => {
       return expectation.description;
-    }
+    },
   };
 
   function hex(ch: any) {
@@ -134,20 +134,20 @@ export function parse(input: string, options: any = {}) {
   const peg$c0 = '/';
   const peg$c1 = peg$literalExpectation('/', false);
   const peg$c2 = (refs: any) => {
-      return refs || [];
+    return refs || [];
   };
   const peg$c3 = '[';
   const peg$c4 = peg$literalExpectation('[', false);
   const peg$c5 = ']';
   const peg$c6 = peg$literalExpectation(']', false);
   const peg$c7 = (ref: any, key: any) => {
-      return { ref, key };
+    return { ref, key };
   };
   const peg$c8 = (ref: any, refs: any) => {
-      return [ref].concat(refs);
+    return [ref].concat(refs);
   };
   const peg$c9 = (ref: any) => {
-      return [ref];
+    return [ref];
   };
   const peg$c10 = peg$otherExpectation('ref');
   const peg$c11 = /^[a-zA-Z0-9_]/;
@@ -185,11 +185,7 @@ export function parse(input: string, options: any = {}) {
   function expected(description: any, l: any) {
     l = l !== void 0 ? l : peg$computeLocation(peg$savedPos, peg$currPos);
 
-    throw peg$buildStructuredError(
-      [peg$otherExpectation(description)],
-      input.substring(peg$savedPos, peg$currPos),
-      l
-    );
+    throw peg$buildStructuredError([peg$otherExpectation(description)], input.substring(peg$savedPos, peg$currPos), l);
   }
 
   // @ts-ignore
@@ -235,7 +231,7 @@ export function parse(input: string, options: any = {}) {
       details = peg$posDetailsCache[p];
       details = {
         line: details.line,
-        column: details.column
+        column: details.column,
       };
 
       while (p < pos) {
@@ -262,13 +258,13 @@ export function parse(input: string, options: any = {}) {
       start: {
         offset: startPos,
         line: startPosDetails.line,
-        column: startPosDetails.column
+        column: startPosDetails.column,
       },
       end: {
         offset: endPos,
         line: endPosDetails.line,
-        column: endPosDetails.column
-      }
+        column: endPosDetails.column,
+      },
     };
   }
 
@@ -545,7 +541,7 @@ export function parse(input: string, options: any = {}) {
       peg$maxFailPos < input.length ? input.charAt(peg$maxFailPos) : null,
       peg$maxFailPos < input.length
         ? peg$computeLocation(peg$maxFailPos, peg$maxFailPos + 1)
-        : peg$computeLocation(peg$maxFailPos, peg$maxFailPos)
+        : peg$computeLocation(peg$maxFailPos, peg$maxFailPos),
     );
   }
 }

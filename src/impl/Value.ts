@@ -5,7 +5,6 @@ import { Named } from './Named';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 
 export class Value<P extends Element<any>> extends Named<P> {
-
   @observable private _value: string | null = null;
 
   get value(): string | null {
@@ -16,7 +15,8 @@ export class Value<P extends Element<any>> extends Named<P> {
     this._value = value;
   }
 
-  @action withValue(val: string): this {
+  @action
+  withValue(val: string): this {
     this._value = val;
     return this;
   }

@@ -9,11 +9,11 @@ import { KevoreeFactory } from '../factory';
 import { KevoreeVisitor } from '../visitor';
 
 export class Binding extends Element<Model> {
-
   @observable private _channel: Channel | null = null;
   @observable private _port: Port | null = null;
 
-  @computed get channel() {
+  @computed
+  get channel() {
     return this._channel;
   }
 
@@ -21,7 +21,8 @@ export class Binding extends Element<Model> {
     this._channel = chan;
   }
 
-  @computed get port() {
+  @computed
+  get port() {
     return this._port;
   }
 
@@ -29,7 +30,8 @@ export class Binding extends Element<Model> {
     this._port = port;
   }
 
-  @computed get _key(): string | null {
+  @computed
+  get _key(): string | null {
     if (this._channel && this._port) {
       if (this._channel._key && this._port._key) {
         return hash(`${this._channel._key}_${this._port._key}`);
@@ -39,7 +41,8 @@ export class Binding extends Element<Model> {
     throw new Error('Cannot get binding key: channel & port must be set');
   }
 
-  @action withChannelAndPort(channel: Channel, port: Port): this {
+  @action
+  withChannelAndPort(channel: Channel, port: Port): this {
     this._channel = channel;
     this._port = port;
     return this;

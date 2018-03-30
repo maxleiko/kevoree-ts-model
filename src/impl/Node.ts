@@ -9,11 +9,11 @@ import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class Node extends Instance<NodeType, Model> {
-
   @observable private _components: Map<string, Component> = new Map();
   @observable private _groups: Map<string, Group> = new Map();
 
-  @action addComponent(comp: Component) {
+  @action
+  addComponent(comp: Component) {
     if (!comp._key) {
       throw new Error(`Cannot add component in ${this._key}: component key is not set`);
     }
@@ -22,29 +22,34 @@ export class Node extends Instance<NodeType, Model> {
     comp.refInParent = 'components';
   }
 
-  @action removeComponent(comp: Component) {
+  @action
+  removeComponent(comp: Component) {
     if (comp._key) {
       this._components.delete(comp._key);
     }
     comp.parent = null;
   }
 
-  @computed get components(): Component[] {
+  @computed
+  get components(): Component[] {
     return Array.from(this._components.values());
   }
 
-  @computed get groups(): Group[] {
+  @computed
+  get groups(): Group[] {
     return Array.from(this._groups.values());
   }
 
-  @action attachGroup(group: Group) {
+  @action
+  attachGroup(group: Group) {
     if (!group._key) {
       throw new Error(`Cannot attach group in ${this._key}: group key is not set`);
     }
     this._groups.set(group._key, group);
   }
 
-  @action detachGroup(group: Group) {
+  @action
+  detachGroup(group: Group) {
     if (group._key) {
       this._groups.delete(group._key);
       // TODO detach group also

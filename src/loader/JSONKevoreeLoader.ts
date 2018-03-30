@@ -4,7 +4,6 @@ import { Element, JSONObject } from '../impl';
 import { KevoreeFactory, DefaultKevoreeFactory } from '../factory';
 
 export class JSONKevoreeLoader implements KevoreeLoader {
-
   constructor(private _factory: KevoreeFactory = new DefaultKevoreeFactory()) {}
 
   parse<T extends Element<any> = Element<any>>(data: string | JSONObject): T {

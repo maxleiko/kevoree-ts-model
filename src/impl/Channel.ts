@@ -8,14 +8,15 @@ import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 
 export class Channel extends Instance<ChannelType, Model> {
-
   @observable private _bindings: Map<string, Binding> = new Map();
 
-  @computed get bindings(): Binding[] {
+  @computed
+  get bindings(): Binding[] {
     return Array.from(this._bindings.values());
   }
 
-  @action addBinding(binding: Binding) {
+  @action
+  addBinding(binding: Binding) {
     if (!binding._key) {
       throw new Error(`Cannot add binding in ${this._key}: binding key is not set`);
     }

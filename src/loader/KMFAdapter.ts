@@ -2,7 +2,7 @@ import { JSONObject } from '../impl';
 
 const propAdapter: any = {
   _className: 'class',
-  dictionary: 'dictionaryType'
+  dictionary: 'dictionaryType',
 };
 
 /**
@@ -11,8 +11,12 @@ const propAdapter: any = {
  */
 const objAdapter: any = {
   _className: (val: string) => {
-    if (val.startsWith('org.kevoree.NodeType')) { return 'NodeType'; }
-    if (val.startsWith('org.kevoree.DictionaryAttribute')) { return 'ParamType'; }
+    if (val.startsWith('org.kevoree.NodeType')) {
+      return 'NodeType';
+    }
+    if (val.startsWith('org.kevoree.DictionaryAttribute')) {
+      return 'ParamType';
+    }
     return val;
   },
   version: (val: string) => parseInt(val, 10),
@@ -26,7 +30,7 @@ const objAdapter: any = {
       return dictionary;
     }
     return {};
-  }
+  },
 };
 
 const handler: ProxyHandler<JSONObject> = {
@@ -37,7 +41,7 @@ const handler: ProxyHandler<JSONObject> = {
     const kmfValue = obj[adaptedProp];
     // adapt value to new value if needed
     return objAdapter[prop] ? objAdapter[prop](kmfValue) : kmfValue;
-  }
+  },
 };
 
 export function kmfAdapter(o: JSONObject): JSONObject {

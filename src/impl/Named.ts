@@ -4,14 +4,15 @@ import { Element, JSONObject } from './Element';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 
 export abstract class Named<P extends Element<any> = Element<any>> extends Element<P> {
-
   @observable private _name: string | null = null;
 
-  @computed get _key() {
+  @computed
+  get _key() {
     return this._name;
   }
 
-  @action withName(name: string): this {
+  @action
+  withName(name: string): this {
     this._name = name;
     return this;
   }

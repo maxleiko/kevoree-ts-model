@@ -10,7 +10,6 @@ import { Binding } from './Binding';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 
 export class Model extends Element {
-
   getNode = createTransformer<string, Node | undefined>((key) => this._nodes.get(key));
   getGroup = createTransformer<string, Group | undefined>((key) => this._groups.get(key));
   getChannel = createTransformer<string, Channel | undefined>((key) => this._channels.get(key));

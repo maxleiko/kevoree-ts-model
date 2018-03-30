@@ -10,14 +10,14 @@ export interface JSONObject {
 }
 
 export abstract class Element<P extends Element<any> | null = null> {
-  
   getByPath = createTransformer<string, Element<any> | null>((p) => this._getByPath(p));
 
   @observable private _refInParent: string | null = null;
   @observable private _parent: P | null = null;
   @observable private _metas: Map<string, Value<this>> = new Map();
 
-  @computed get path(): string {
+  @computed
+  get path(): string {
     if (!this._key) {
       throw new Error(`Cannot compute path for ${this} because "key" is null`);
     }
@@ -31,7 +31,8 @@ export abstract class Element<P extends Element<any> | null = null> {
     return this._key;
   }
 
-  @computed get parent(): P | null {
+  @computed
+  get parent(): P | null {
     return this._parent;
   }
 
@@ -39,7 +40,8 @@ export abstract class Element<P extends Element<any> | null = null> {
     this._parent = parent;
   }
 
-  @computed get refInParent(): string | null {
+  @computed
+  get refInParent(): string | null {
     return this._refInParent;
   }
 
@@ -47,11 +49,13 @@ export abstract class Element<P extends Element<any> | null = null> {
     this._refInParent = ref;
   }
 
-  @computed get metas(): Map<string, any> {
+  @computed
+  get metas(): Map<string, any> {
     return this._metas;
   }
 
-  @action addMeta(meta: Value<this>) {
+  @action
+  addMeta(meta: Value<this>) {
     if (!meta._key) {
       throw new Error(`Cannot add meta in ${this._key}: meta key is not set`);
     }
@@ -60,7 +64,8 @@ export abstract class Element<P extends Element<any> | null = null> {
     meta._refInParent = 'metas';
   }
 
-  @action toJSON(_key?: any): { [s: string]: any } {
+  @action
+  toJSON(_key?: any): { [s: string]: any } {
     const self = this as any;
     const clone: any = { _className: this._className };
     // clone all properties
@@ -72,7 +77,7 @@ export abstract class Element<P extends Element<any> | null = null> {
     // clean model
     delete clone.parent;
     delete clone.refInParent;
-    
+
     return clone;
   }
 

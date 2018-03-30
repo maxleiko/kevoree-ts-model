@@ -6,12 +6,12 @@ import { JSONObject } from '.';
 import { KevoreeFactory } from '../factory';
 
 export class DeployUnit extends Named<Namespace> {
-
   @observable private _hash: string = '';
   @observable private _version: string = '';
   @observable private _platform: string = '';
 
-  @computed get _key(): string {
+  @computed
+  get _key(): string {
     return `${this.name}:${this._version}`;
   }
 
@@ -39,17 +39,20 @@ export class DeployUnit extends Named<Namespace> {
     this._platform = value;
   }
 
-  @action withHash(hash: string): this {
+  @action
+  withHash(hash: string): this {
     this._hash = hash;
     return this;
   }
 
-  @action withVersion(version: string): this {
+  @action
+  withVersion(version: string): this {
     this._version = version;
     return this;
   }
 
-  @action withPlatform(platform: string): this {
+  @action
+  withPlatform(platform: string): this {
     this._platform = platform;
     return this;
   }

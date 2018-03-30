@@ -8,12 +8,12 @@ import { JSONObject } from './Element';
 export type DataType = 'BYTE' | 'SHORT' | 'INT' | 'LONG' | 'FLOAT' | 'DOUBLE' | 'BOOLEAN' | 'CHAR' | 'STRING';
 
 export class ParamType<P extends TypeDefinition = TypeDefinition> extends Named<P> {
-
   @observable private _fragmentDependant: boolean = false;
   @observable private _datatype: DataType = 'STRING';
   @observable private _defaultValue: string | null = null;
 
-  @computed get fragmentDependant(): boolean {
+  @computed
+  get fragmentDependant(): boolean {
     return this._fragmentDependant;
   }
 
@@ -21,7 +21,8 @@ export class ParamType<P extends TypeDefinition = TypeDefinition> extends Named<
     this._fragmentDependant = val;
   }
 
-  @computed get datatype(): DataType {
+  @computed
+  get datatype(): DataType {
     return this._datatype;
   }
 
@@ -29,7 +30,8 @@ export class ParamType<P extends TypeDefinition = TypeDefinition> extends Named<
     this._datatype = type;
   }
 
-  @computed get defaultValue(): string | null {
+  @computed
+  get defaultValue(): string | null {
     return this._defaultValue;
   }
 
