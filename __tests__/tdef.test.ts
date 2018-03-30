@@ -1,7 +1,6 @@
 import { Model, Node, Namespace, NodeType } from '../src';
 
 describe('TypeDefinition', () => {
-
   describe('.delete()', () => {
     it('removes it from the namespace', () => {
       const model = new Model();

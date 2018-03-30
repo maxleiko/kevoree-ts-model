@@ -116,7 +116,9 @@ function buildMessage(expected: any, found: any) {
         return descriptions[0] + ' or ' + descriptions[1];
 
       default:
-        return descriptions.slice(0, -1).join(', ') + ', or ' + descriptions[descriptions.length - 1];
+        return (
+          descriptions.slice(0, -1).join(', ') + ', or ' + descriptions[descriptions.length - 1]
+        );
     }
   }
 
@@ -154,7 +156,11 @@ export function parse(input: string, options: any = {}) {
   const peg$c12 = peg$classExpectation([['a', 'z'], ['A', 'Z'], ['0', '9'], '_'], false, false);
   const peg$c13 = peg$otherExpectation('key');
   const peg$c14 = /^[a-zA-Z0-9_:.-]/;
-  const peg$c15 = peg$classExpectation([['a', 'z'], ['A', 'Z'], ['0', '9'], '_', ':', '.', '-'], false, false);
+  const peg$c15 = peg$classExpectation(
+    [['a', 'z'], ['A', 'Z'], ['0', '9'], '_', ':', '.', '-'],
+    false,
+    false,
+  );
   const peg$posDetailsCache = [{ line: 1, column: 1 }];
   let peg$maxFailExpected: any[] = [];
   let peg$currPos = 0;
@@ -185,7 +191,11 @@ export function parse(input: string, options: any = {}) {
   function expected(description: any, l: any) {
     l = l !== void 0 ? l : peg$computeLocation(peg$savedPos, peg$currPos);
 
-    throw peg$buildStructuredError([peg$otherExpectation(description)], input.substring(peg$savedPos, peg$currPos), l);
+    throw peg$buildStructuredError(
+      [peg$otherExpectation(description)],
+      input.substring(peg$savedPos, peg$currPos),
+      l,
+    );
   }
 
   // @ts-ignore

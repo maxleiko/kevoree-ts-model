@@ -11,7 +11,9 @@ import { createTransformer } from 'mobx-utils';
 import { keyUpdater } from '../utils';
 
 export class Node extends Instance<NodeType, Model> {
-  getComponent = createTransformer<string, Component | undefined>((name) => this._components.get(name));
+  getComponent = createTransformer<string, Component | undefined>((name) =>
+    this._components.get(name),
+  );
   getGroup = createTransformer<string, Group | undefined>((name) => this._groups.get(name));
 
   @observable private _components: Map<string, Component> = new Map();

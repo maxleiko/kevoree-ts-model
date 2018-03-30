@@ -15,7 +15,9 @@ export class Model extends Element {
   getGroup = createTransformer<string, Group | undefined>((key) => this._groups.get(key));
   getChannel = createTransformer<string, Channel | undefined>((key) => this._channels.get(key));
   getBinding = createTransformer<string, Binding | undefined>((key) => this._bindings.get(key));
-  getNamespace = createTransformer<string, Namespace | undefined>((key) => this._namespaces.get(key));
+  getNamespace = createTransformer<string, Namespace | undefined>((key) =>
+    this._namespaces.get(key),
+  );
 
   @observable private _nodes: Map<string, Node> = new Map();
   @observable private _groups: Map<string, Group> = new Map();

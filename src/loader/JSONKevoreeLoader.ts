@@ -33,7 +33,9 @@ export class JSONKevoreeLoader implements KevoreeLoader {
     if (typeof o === 'object') {
       return o;
     }
-    throw new Error(`JSONKevoreeLoader expects a JSON object in order to load the model (given: ${typeof o})`);
+    throw new Error(
+      `JSONKevoreeLoader expects a JSON object in order to load the model (given: ${typeof o})`,
+    );
   }
 
   private createElement<T extends Element<any> = Element<any>>(data: JSONObject): T {

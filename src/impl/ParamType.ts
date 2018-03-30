@@ -5,7 +5,16 @@ import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { TypeDefinition } from './TypeDefinition';
 import { JSONObject } from './Element';
 
-export type DataType = 'BYTE' | 'SHORT' | 'INT' | 'LONG' | 'FLOAT' | 'DOUBLE' | 'BOOLEAN' | 'CHAR' | 'STRING';
+export type DataType =
+  | 'BYTE'
+  | 'SHORT'
+  | 'INT'
+  | 'LONG'
+  | 'FLOAT'
+  | 'DOUBLE'
+  | 'BOOLEAN'
+  | 'CHAR'
+  | 'STRING';
 
 export class ParamType<P extends TypeDefinition = TypeDefinition> extends Named<P> {
   @observable private _fragmentDependant: boolean = false;

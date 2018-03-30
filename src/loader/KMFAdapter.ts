@@ -3,7 +3,17 @@ import { JSONObject } from '../impl';
 const propAdapter: any = {
   _className: 'class',
   dictionary: 'dictionaryType',
+  inputs: 'provided',
+  outputs: 'required',
 };
+
+function kmfToPort(val: any[]) {
+  const ports: any = {};
+  val.forEach((port) => {
+    ports[port.name] = new Proxy(port, handler);
+  });
+  return ports;
+}
 
 /**
  * Values passed to this object methods are the ones from KMF
@@ -13,6 +23,15 @@ const objAdapter: any = {
   _className: (val: string) => {
     if (val.startsWith('org.kevoree.NodeType')) {
       return 'NodeType';
+    }
+    if (val.startsWith('org.kevoree.ComponentType')) {
+      return 'ComponentType';
+    }
+    if (val.startsWith('org.kevoree.GroupType')) {
+      return 'GroupType';
+    }
+    if (val.startsWith('org.kevoree.ChannelType')) {
+      return 'ChannelType';
     }
     if (val.startsWith('org.kevoree.DictionaryAttribute')) {
       return 'ParamType';
@@ -31,6 +50,8 @@ const objAdapter: any = {
     }
     return {};
   },
+  outputs: kmfToPort,
+  inputs: kmfToPort,
 };
 
 const handler: ProxyHandler<JSONObject> = {

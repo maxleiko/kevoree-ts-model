@@ -16,21 +16,21 @@ describe('Model', () => {
       model.addNode(node);
       expect(model.getNode('node0')).toBe(node);
     });
-  
+
     it('get added group', () => {
       const model = new Model();
       const group = new Group().withName('sync');
       model.addGroup(group);
       expect(model.getGroup('sync')).toBe(group);
     });
-  
+
     it('get added channel', () => {
       const model = new Model();
       const channel = new Channel().withName('channel');
       model.addChannel(channel);
       expect(model.getChannel('channel')).toBe(channel);
     });
-  
+
     it('get added namespace', () => {
       const model = new Model();
       const ns = new Namespace().withName('kevoree');

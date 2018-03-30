@@ -14,7 +14,7 @@ describe('Node', () => {
       node.addComponent(comp);
       expect(node.getComponent('comp')).toBe(comp);
     });
-  
+
     it('add group', () => {
       const node = new Node().withName('node0');
       const group = new Group().withName('sync');
@@ -31,7 +31,7 @@ describe('Node', () => {
       node.removeComponent(comp);
       expect(node.getComponent('comp')).toBeUndefined();
     });
-  
+
     it('remove group', () => {
       const node = new Node().withName('node0');
       const group = new Group().withName('sync');

@@ -1,0 +1,54 @@
+{
+  "class": "org.kevoree.ComponentType@name=Ticker,version=1",
+  "abstract": "false",
+  "name": "Ticker",
+  "version": "1",
+  "deployUnits": [],
+  "superTypes": [],
+  "dictionaryType": [
+    {
+      "class": "org.kevoree.DictionaryType@0.0",
+      "generated_KMF_ID": "0.0",
+      "attributes": [
+        {
+          "class": "org.kevoree.DictionaryAttribute@random",
+          "fragmentDependant": "false",
+          "optional": "true",
+          "name": "random",
+          "state": "false",
+          "datatype": "BOOLEAN",
+          "defaultValue": "false",
+          "genericTypes": []
+        },
+        {
+          "class": "org.kevoree.DictionaryAttribute@period",
+          "fragmentDependant": "false",
+          "optional": "true",
+          "name": "period",
+          "state": "false",
+          "datatype": "LONG",
+          "defaultValue": "3000",
+          "genericTypes": []
+        }
+      ]
+    }
+  ],
+  "metaData": [
+    {
+      "class": "org.kevoree.Value@description",
+      "name": "description",
+      "value": "A Kevoree component that sends a 'tick' message at user-defined intervals"
+    }
+  ],
+  "required": [
+    {
+      "class": "org.kevoree.PortTypeRef@tick",
+      "noDependency": "true",
+      "optional": "true",
+      "name": "tick",
+      "ref": [],
+      "mappings": []
+    }
+  ],
+  "provided": []
+}

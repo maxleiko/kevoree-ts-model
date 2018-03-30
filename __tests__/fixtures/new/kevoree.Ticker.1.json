@@ -1,0 +1,38 @@
+{
+  "_className": "ComponentType",
+  "name": "Ticker",
+  "version": 1,
+  "deployUnits": {},
+  "dictionary": {
+    "random": {
+      "_className": "ParamType",
+      "fragmentDependant": false,
+      "optional": true,
+      "name": "random",
+      "datatype": "BOOLEAN",
+      "defaultValue": "false"
+    },
+    "period": {
+      "_className": "ParamType",
+      "fragmentDependant": false,
+      "optional": true,
+      "name": "period",
+      "datatype": "LONG",
+      "defaultValue": "3000"
+    }
+  },
+  "metas": {
+    "description": {
+      "_className": "Value",
+      "name": "description",
+      "value": "A Kevoree component that sends a 'tick' message at user-defined intervals"
+    }
+  },
+  "outputs": {
+    "tick": {
+      "class": "org.kevoree.PortType@tick",
+      "name": "tick"
+    }
+  },
+  "inputs": {}
+}

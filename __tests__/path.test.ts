@@ -13,10 +13,15 @@ describe('Path', () => {
   });
 
   it('should parse nested path', () => {
-    const g = parse('/namespaces[kevoree]/deployUnits[kevoree-node-javascript:5.0.0-alpha:hashjfhyfyr937465]');
+    const g = parse(
+      '/namespaces[kevoree]/deployUnits[kevoree-node-javascript:5.0.0-alpha:hashjfhyfyr937465]',
+    );
     expect(g.length).toBe(2);
     expect(g[0]).toEqual({ ref: 'namespaces', key: 'kevoree' });
-    expect(g[1]).toEqual({ ref: 'deployUnits', key: 'kevoree-node-javascript:5.0.0-alpha:hashjfhyfyr937465' });
+    expect(g[1]).toEqual({
+      ref: 'deployUnits',
+      key: 'kevoree-node-javascript:5.0.0-alpha:hashjfhyfyr937465',
+    });
   });
 
   it('should throw when path is malformed', () => {
