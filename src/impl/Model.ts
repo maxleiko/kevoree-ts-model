@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, reaction } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 
 import { Element, JSONObject } from './Element';
@@ -8,6 +8,7 @@ import { Group } from './Group';
 import { Channel } from './Channel';
 import { Binding } from './Binding';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
+import { keyUpdater } from '../utils/key-updater';
 
 export class Model extends Element {
   getNode = createTransformer<string, Node | undefined>((key) => this._nodes.get(key));
@@ -30,6 +31,7 @@ export class Model extends Element {
     this._nodes.set(node._key, node);
     node.parent = this;
     node.refInParent = 'nodes';
+    keyUpdater(node, this._nodes);
   }
 
   @action
@@ -40,6 +42,7 @@ export class Model extends Element {
     this._groups.set(group._key, group);
     group.parent = this;
     group.refInParent = 'groups';
+    keyUpdater(group, this._groups);
   }
 
   @action
@@ -50,6 +53,7 @@ export class Model extends Element {
     this._channels.set(chan._key, chan);
     chan.parent = this;
     chan.refInParent = 'channels';
+    keyUpdater(chan, this._channels);
   }
 
   @action
@@ -60,6 +64,7 @@ export class Model extends Element {
     this._bindings.set(binding._key, binding);
     binding.parent = this;
     binding.refInParent = 'bindings';
+    keyUpdater(binding, this._bindings);
   }
 
   @action
@@ -70,6 +75,7 @@ export class Model extends Element {
     this._namespaces.set(ns._key, ns);
     ns.parent = this;
     ns.refInParent = 'namespaces';
+    keyUpdater(ns, this._namespaces);
   }
 
   @action

@@ -6,8 +6,12 @@ import { TypeDefinition } from './TypeDefinition';
 import { DeployUnit } from './DeployUnit';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
+import { createTransformer } from 'mobx-utils';
+import { keyUpdater } from '../utils';
 
 export class Namespace extends Named<Model> {
+  getTdef = createTransformer<string, TypeDefinition | undefined>((name) => this._tdefs.get(name));
+
   @observable private _tdefs: Map<string, TypeDefinition> = new Map();
   @observable private _dus: Map<string, DeployUnit> = new Map();
 
@@ -21,10 +25,6 @@ export class Namespace extends Named<Model> {
     return Array.from(this._dus.values());
   }
 
-  getTdef(key: string) {
-    return this._tdefs.get(key);
-  }
-
   @action
   addTdef(tdef: TypeDefinition) {
     if (!tdef._key) {
@@ -33,6 +33,7 @@ export class Namespace extends Named<Model> {
     this._tdefs.set(tdef._key, tdef);
     tdef.parent = this;
     tdef.refInParent = 'tdefs';
+    keyUpdater(tdef, this._tdefs);
   }
 
   @action
@@ -49,6 +50,7 @@ export class Namespace extends Named<Model> {
     this._dus.set(du._key, du);
     du.parent = this;
     du.refInParent = 'dus';
+    keyUpdater(du, this._dus);
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

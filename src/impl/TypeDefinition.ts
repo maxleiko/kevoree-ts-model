@@ -5,6 +5,7 @@ import { Namespace } from './Namespace';
 import { DeployUnit } from './DeployUnit';
 import { ParamType, JSONObject } from '.';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
+import { keyUpdater } from '../utils';
 
 export abstract class TypeDefinition extends Named<Namespace> {
   @observable private _version: number | null = null;
@@ -46,11 +47,13 @@ export abstract class TypeDefinition extends Named<Namespace> {
     this._dictionary.set(param._key, param);
     param.parent = this;
     param.refInParent = 'params';
+    keyUpdater(param, this._dictionary);
   }
 
   @action
   addDeployUnit(du: DeployUnit) {
     this._deployUnits.set(du._key, du);
+    keyUpdater(du, this._deployUnits);
   }
 
   @action

@@ -15,6 +15,7 @@ export class DeployUnit extends Named<Namespace> {
     return `${this.name}:${this._version}`;
   }
 
+  @computed
   get hash(): string {
     return this._hash;
   }
@@ -23,6 +24,7 @@ export class DeployUnit extends Named<Namespace> {
     this._hash = value;
   }
 
+  @computed
   get version(): string {
     return this._version;
   }
@@ -31,6 +33,7 @@ export class DeployUnit extends Named<Namespace> {
     this._version = value;
   }
 
+  @computed
   get platform(): string {
     return this._platform;
   }

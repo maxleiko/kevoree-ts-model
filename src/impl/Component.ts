@@ -6,6 +6,7 @@ import { Port } from './Port';
 import { ComponentType } from './ComponentType';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
+import { keyUpdater } from '../utils';
 
 export class Component extends Instance<ComponentType, Node> {
   @observable private _inputs: Map<string, Port> = new Map();
@@ -29,6 +30,7 @@ export class Component extends Instance<ComponentType, Node> {
     this._inputs.set(port._key, port);
     port.parent = this;
     port.refInParent = 'inputs';
+    keyUpdater(port, this._inputs);
   }
 
   @action
@@ -38,6 +40,7 @@ export class Component extends Instance<ComponentType, Node> {
     }
     port.parent = this;
     port.refInParent = 'outputs';
+    keyUpdater(port, this._outputs);
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

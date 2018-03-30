@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 
 import { Element, JSONObject } from './Element';
 import { Named } from './Named';
@@ -7,6 +7,7 @@ import { KevoreeFactory } from '../factory/KevoreeFactory';
 export class Value<P extends Element<any>> extends Named<P> {
   @observable private _value: string | null = null;
 
+  @computed
   get value(): string | null {
     return this._value;
   }

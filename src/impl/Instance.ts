@@ -6,6 +6,7 @@ import { TypeDefinition } from './TypeDefinition';
 import { Value } from './Value';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { createTransformer } from 'mobx-utils';
+import { keyUpdater } from '../utils';
 
 export abstract class Instance<
   T extends TypeDefinition = TypeDefinition,
@@ -48,6 +49,7 @@ export abstract class Instance<
     this._params.set(param._key, param);
     param.parent = this;
     param.refInParent = 'dictionary';
+    keyUpdater(param, this._params);
   }
 
   @action
@@ -64,7 +66,6 @@ export abstract class Instance<
     return o;
   }
 
-  @action
   fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
     if ('started' in data) {

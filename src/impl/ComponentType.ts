@@ -4,6 +4,7 @@ import { TypeDefinition } from './TypeDefinition';
 import { PortType } from './PortType';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
+import { keyUpdater } from '../utils';
 
 export class ComponentType extends TypeDefinition {
   @observable private _inputs: Map<string, PortType> = new Map();
@@ -26,6 +27,7 @@ export class ComponentType extends TypeDefinition {
     }
     this._inputs.set(port._key, port);
     port.parent = this;
+    keyUpdater(port, this._inputs);
   }
 
   @action
@@ -34,6 +36,7 @@ export class ComponentType extends TypeDefinition {
       this._outputs.set(port._key, port);
     }
     port.parent = this;
+    keyUpdater(port, this._outputs);
   }
 
   @action

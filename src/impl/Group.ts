@@ -6,6 +6,7 @@ import { Node } from './Node';
 import { GroupType } from './GroupType';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
+import { keyUpdater } from '../utils';
 
 export class Group extends Instance<GroupType, Model> {
   @observable private _nodes: Map<string, Node> = new Map();
@@ -16,7 +17,7 @@ export class Group extends Instance<GroupType, Model> {
       throw new Error(`Cannot attach node in ${this._key}: node key is not set`);
     }
     this._nodes.set(node._key, node);
-    // TODO attach group also
+    keyUpdater(node, this._nodes);
   }
 
   @computed

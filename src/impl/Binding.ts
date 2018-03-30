@@ -6,7 +6,6 @@ import { Channel } from './Channel';
 import { Port } from './Port';
 import { Model } from './Model';
 import { KevoreeFactory } from '../factory';
-import { KevoreeVisitor } from '../visitor';
 
 export class Binding extends Element<Model> {
   @observable private _channel: Channel | null = null;
@@ -72,10 +71,6 @@ export class Binding extends Element<Model> {
         this._port = p;
       }
     }
-  }
-
-  visit(visitor: KevoreeVisitor): void {
-    visitor.visitBinding(this);
   }
 
   get _className(): string {

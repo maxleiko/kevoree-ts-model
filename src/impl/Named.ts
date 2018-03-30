@@ -17,6 +17,7 @@ export abstract class Named<P extends Element<any> = Element<any>> extends Eleme
     return this;
   }
 
+  @computed
   get name(): string | null {
     return this._name;
   }

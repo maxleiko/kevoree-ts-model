@@ -2,7 +2,7 @@ import { observable, computed, action } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 
 import { Value } from './Value';
-import { parse } from '../utils';
+import { parse, keyUpdater } from '../utils';
 import { KevoreeFactory } from '../factory';
 
 export interface JSONObject {
@@ -62,16 +62,18 @@ export abstract class Element<P extends Element<any> | null = null> {
     this._metas.set(meta._key, meta);
     meta._parent = this;
     meta._refInParent = 'metas';
+    keyUpdater(meta, this._metas);
   }
 
-  @action
   toJSON(_key?: any): { [s: string]: any } {
     const self = this as any;
     const clone: any = { _className: this._className };
     // clone all properties
     for (const prop in self) {
       if (self.hasOwnProperty(prop)) {
-        clone[prop.substr(1)] = self[prop];
+        if (typeof self[prop] !== 'function') {
+          clone[prop.substr(1)] = self[prop];
+        }
       }
     }
     // clean model
@@ -80,6 +82,14 @@ export abstract class Element<P extends Element<any> | null = null> {
 
     return clone;
   }
+
+  // @action
+  // delete() {
+  //   if (this._parent && this._refInParent) {
+  //     const parent: any = this._parent;
+  //     parent[`_${this._refInParent}`].delete(this._key);
+  //   }
+  // }
 
   abstract fromJSON(data: JSONObject, _factory: KevoreeFactory): void;
   abstract get _key(): string | null;

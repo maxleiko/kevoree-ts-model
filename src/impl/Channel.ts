@@ -6,6 +6,7 @@ import { Binding } from './Binding';
 import { ChannelType } from './ChannelType';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
+import { keyUpdater } from '../utils/key-updater';
 
 export class Channel extends Instance<ChannelType, Model> {
   @observable private _bindings: Map<string, Binding> = new Map();
@@ -21,6 +22,7 @@ export class Channel extends Instance<ChannelType, Model> {
       throw new Error(`Cannot add binding in ${this._key}: binding key is not set`);
     }
     this._bindings.set(binding._key, binding);
+    keyUpdater(binding, this._bindings);
   }
 
   toJSON(key: any): { [s: string]: any } {

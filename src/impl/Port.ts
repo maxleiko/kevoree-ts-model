@@ -5,6 +5,7 @@ import { Component } from './Component';
 import { Binding } from './Binding';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
+import { keyUpdater } from '../utils';
 
 export class Port extends Named<Component> {
   @observable private _bindings: Map<string, Binding> = new Map();
@@ -20,6 +21,7 @@ export class Port extends Named<Component> {
       throw new Error(`Cannot add binding in ${this._key}: binding key is not set`);
     }
     this._bindings.set(binding._key, binding);
+    keyUpdater(binding, this._bindings);
   }
 
   toJSON(key: any): { [s: string]: any } {
