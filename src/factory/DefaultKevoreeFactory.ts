@@ -64,7 +64,7 @@ export class DefaultKevoreeFactory implements KevoreeFactory {
   createPortType(): PortType {
     return new PortType();
   }
-  createValue<P extends Element<any>>(): Value<P> {
+  createValue<P extends Element>(): Value<P> {
     return new Value<P>();
   }
 }

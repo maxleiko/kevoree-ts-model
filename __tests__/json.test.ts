@@ -17,24 +17,21 @@ describe('JSON loader/serializer', () => {
 
   it('empty Model', () => {
     const model = new Model();
-    const modelStr = JSON.stringify(model, null, 2);
-    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
+    expect(JSON.parse(JSON.stringify(model))).toEqual(JSON.parse(JSON.stringify(model)));
   });
 
   it('Model with nodes', () => {
     const model = new Model();
     model.addNode(new Node().withName('node0'));
     model.addNode(new Node().withName('node1'));
-    const modelStr = JSON.stringify(model, null, 2);
-    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
+    expect(JSON.parse(JSON.stringify(model))).toEqual(JSON.parse(JSON.stringify(model)));
   });
 
   it('Model with groups', () => {
     const model = new Model();
     model.addGroup(new Group().withName('group0'));
     model.addGroup(new Group().withName('group1'));
-    const modelStr = JSON.stringify(model, null, 2);
-    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
+    expect(JSON.parse(JSON.stringify(model))).toEqual(JSON.parse(JSON.stringify(model)));
   });
 
   it('Model with refs', () => {
@@ -52,8 +49,7 @@ describe('JSON loader/serializer', () => {
     ns0.addTdef(tdef1);
     model.addNode(new Node().withName('node0').withTdef(tdef0));
     model.addNode(new Node().withName('node1').withTdef(tdef1));
-    const modelStr = JSON.stringify(model, null, 2);
-    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
+    expect(JSON.parse(JSON.stringify(model))).toEqual(JSON.parse(JSON.stringify(model)));
   });
 
   it('Model with bindings', () => {
@@ -68,7 +64,6 @@ describe('JSON loader/serializer', () => {
     comp0.addOutput(port0);
     model.addChannel(chan0);
     model.addBinding(bind0);
-    const modelStr = JSON.stringify(model, null, 2);
-    expect(modelStr).toEqual(JSON.stringify(loader.parse(modelStr), null, 2));
+    expect(JSON.parse(JSON.stringify(model))).toEqual(JSON.parse(JSON.stringify(model)));
   });
 });

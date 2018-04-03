@@ -33,5 +33,5 @@ export interface KevoreeFactory {
   createParamType<P extends TypeDefinition = TypeDefinition>(): ParamType<P>;
   createPort(): Port;
   createPortType(): PortType;
-  createValue<P extends Element<any>>(): Value<P>;
+  createValue<P extends Element>(): Value<P>;
 }

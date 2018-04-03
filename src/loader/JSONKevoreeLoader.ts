@@ -6,7 +6,7 @@ import { KevoreeFactory, DefaultKevoreeFactory } from '../factory';
 export class JSONKevoreeLoader implements KevoreeLoader {
   constructor(private _factory: KevoreeFactory = new DefaultKevoreeFactory()) {}
 
-  parse<T extends Element<any> = Element<any>>(data: string | JSONObject): T {
+  parse<T extends Element = Element>(data: string | JSONObject): T {
     let o;
     if (typeof data === 'string') {
       o = this.parseData(data);
@@ -18,7 +18,7 @@ export class JSONKevoreeLoader implements KevoreeLoader {
     return elem;
   }
 
-  parseKMF<T extends Element<any> = Element<any>>(data: string): T {
+  parseKMF<T extends Element = Element>(data: string): T {
     return this.parse(kmfAdapter(this.parseData(data)));
   }
 
@@ -38,7 +38,7 @@ export class JSONKevoreeLoader implements KevoreeLoader {
     );
   }
 
-  private createElement<T extends Element<any> = Element<any>>(data: JSONObject): T {
+  private createElement<T extends Element = Element>(data: JSONObject): T {
     let elem: T;
     try {
       elem = (this._factory as any)[`create${data._className}`]();

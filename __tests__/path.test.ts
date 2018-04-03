@@ -1,3 +1,4 @@
+import { Model, Node, Component } from '../src';
 import { parse, SyntaxError } from '../src/utils/path-parser';
 
 describe('Path', () => {
@@ -30,5 +31,26 @@ describe('Path', () => {
     } catch (err) {
       expect(err.message).toBe('Expected "/" but "t" found.');
     }
+  });
+
+  it('should return / for root', () => {
+    const model = new Model();
+    expect(model.path).toEqual('/');
+  });
+
+  it('should nest path following this pattern: ${parent._key}/${_refInParent}[${_key}]', () => {
+    const model = new Model();
+    const node = new Node().withName('node0');
+    model.addNode(node);
+    expect(node.path).toEqual('/nodes[node0]');
+  });
+
+  it('should work for more than 1 level of nest', () => {
+    const model = new Model();
+    const node = new Node().withName('node0');
+    const comp = new Component().withName('comp0');
+    model.addNode(node);
+    node.addComponent(comp);
+    expect(comp.path).toEqual('/nodes[node0]/components[comp0]');
   });
 });

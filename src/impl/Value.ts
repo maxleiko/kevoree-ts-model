@@ -4,7 +4,7 @@ import { Element, JSONObject } from './Element';
 import { Named } from './Named';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 
-export class Value<P extends Element<any>> extends Named<P> {
+export class Value<P extends Element> extends Named<P> {
   @observable private _value: string | null = null;
 
   @computed

@@ -9,45 +9,19 @@ export interface JSONObject {
   [s: string]: string | number | boolean | object | undefined | null;
 }
 
-export abstract class Element<P extends Element<any> | null = null> {
-  getByPath = createTransformer<string, Element<any> | null>((p) => this._getByPath(p));
+export abstract class Element {
+  getByPath = createTransformer<string, Element | null>((p) => this._getByPath(p));
+  getMeta = createTransformer<string, Value<this> | undefined>((name) => this._metas.get(name));
 
-  @observable private _refInParent: string | null = null;
-  @observable private _parent: P | null = null;
   @observable private _deleting: boolean = false;
   @observable private _metas: Map<string, Value<this>> = new Map();
 
   @computed
   get path(): string {
     if (!this._key) {
-      throw new Error(`Cannot compute path for ${this} because "key" is null`);
-    }
-    if (this._parent && this._parent.path) {
-      if (this._parent.path.endsWith('/')) {
-        return `${this._parent.path}${this._refInParent}[${this._key}]`;
-      } else {
-        return `${this._parent.path}/${this._refInParent}[${this._key}]`;
-      }
+      throw new Error(`Cannot compute path for ${this._className} because "key" is null`);
     }
     return this._key;
-  }
-
-  @computed
-  get parent(): P | null {
-    return this._parent;
-  }
-
-  set parent(parent: P | null) {
-    this._parent = parent;
-  }
-
-  @computed
-  get refInParent(): string | null {
-    return this._refInParent;
-  }
-
-  set refInParent(ref: string | null) {
-    this._refInParent = ref;
   }
 
   @computed
@@ -59,19 +33,14 @@ export abstract class Element<P extends Element<any> | null = null> {
     this._deleting = deleting;
   }
 
-  @computed
-  get metas(): Map<string, any> {
-    return this._metas;
-  }
-
   @action
   addMeta(meta: Value<this>) {
     if (!meta._key) {
       throw new Error(`Cannot add meta in ${this._key}: meta key is not set`);
     }
     this._metas.set(meta._key, meta);
-    meta._parent = this;
-    meta._refInParent = 'metas';
+    meta.parent = this;
+    meta.refInParent = 'metas';
     keyUpdater(meta, this._metas);
   }
 
@@ -97,18 +66,6 @@ export abstract class Element<P extends Element<any> | null = null> {
   @action
   delete() {
     this._deleting = true;
-    if (this._parent && this._refInParent) {
-      const parent: any = this._parent;
-      const map: Map<string, this> = parent[`_${this._refInParent}`];
-      if (!map) {
-        // this is a severe error that implies a bug in this library!
-        throw new Error(`Unable to find map "${this._refInParent}" in parent "${parent._key}"`);
-      }
-      if (!this._key) {
-        throw new Error('Cannot delete element from parent: current key is null');
-      }
-      map.delete(this._key);
-    }
   }
 
   abstract fromJSON(data: JSONObject, _factory: KevoreeFactory): void;
@@ -118,7 +75,7 @@ export abstract class Element<P extends Element<any> | null = null> {
     return 'Element';
   }
 
-  private _getByPath(path: string): Element<any> | null {
+  private _getByPath(path: string): Element | null {
     if (path === '/') {
       return this;
     }
@@ -134,11 +91,11 @@ export abstract class Element<P extends Element<any> | null = null> {
     return null;
   }
 
-  private _getByGraph(graph: Array<{ [s: string]: any }>): Element<any> | null {
+  private _getByGraph(graph: Array<{ [s: string]: any }>): Element | null {
     const root = graph.shift();
     if (root) {
       const curr: { [s: string]: any } = this;
-      const prop: Map<string, Element<any>> = curr[`_${root.ref}`];
+      const prop: Map<string, Element> = curr[`_${root.ref}`];
       if (prop) {
         const ref = prop.get(root.key);
         if (ref) {

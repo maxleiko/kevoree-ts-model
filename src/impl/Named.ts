@@ -2,8 +2,9 @@ import { observable, action, computed } from 'mobx';
 
 import { Element, JSONObject } from './Element';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
+import { ChildElement } from './ChildElement';
 
-export abstract class Named<P extends Element<any> = Element<any>> extends Element<P> {
+export abstract class Named<P extends Element> extends ChildElement<P> {
   @observable private _name: string | null = null;
 
   @computed

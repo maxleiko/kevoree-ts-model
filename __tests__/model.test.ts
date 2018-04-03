@@ -1,4 +1,4 @@
-import { Model, Node, Group, Channel, Namespace } from '../src';
+import { Model, Node, Group, Channel, Namespace, Value } from '../src';
 
 describe('Model', () => {
   it('create an empty model', () => {
@@ -10,32 +10,39 @@ describe('Model', () => {
   });
 
   describe('add element in maps', () => {
-    it('get added node', () => {
+    it('nodes', () => {
       const model = new Model();
       const node = new Node().withName('node0');
       model.addNode(node);
       expect(model.getNode('node0')).toBe(node);
     });
 
-    it('get added group', () => {
+    it('groups', () => {
       const model = new Model();
       const group = new Group().withName('sync');
       model.addGroup(group);
       expect(model.getGroup('sync')).toBe(group);
     });
 
-    it('get added channel', () => {
+    it('channels', () => {
       const model = new Model();
       const channel = new Channel().withName('channel');
       model.addChannel(channel);
       expect(model.getChannel('channel')).toBe(channel);
     });
 
-    it('get added namespace', () => {
+    it('namespaces', () => {
       const model = new Model();
       const ns = new Namespace().withName('kevoree');
       model.addNamespace(ns);
       expect(model.getNamespace('kevoree')).toBe(ns);
+    });
+
+    it('metas', () => {
+      const model = new Model();
+      const meta = new Value<Model>().withName('description').withValue('My desc');
+      model.addMeta(meta);
+      expect(model.getMeta('description')).toBe(meta);
     });
   });
 

@@ -3,6 +3,8 @@ import { observable, action, computed } from 'mobx';
 import { Named } from './Named';
 import { Element, JSONObject } from './Element';
 import { TypeDefinition } from './TypeDefinition';
+import { Model } from './Model';
+import { Node } from './Node';
 import { Value } from './Value';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { createTransformer } from 'mobx-utils';
@@ -10,7 +12,7 @@ import { keyUpdater, autoRemove } from '../utils';
 
 export abstract class Instance<
   T extends TypeDefinition = TypeDefinition,
-  P extends Element<any> = Element<any>
+  P extends Element = Model | Node
 > extends Named<P> {
   getParam = createTransformer<string, Value<this> | undefined>((name) => this._params.get(name));
 
@@ -26,7 +28,7 @@ export abstract class Instance<
   set tdef(tdef: T | null) {
     this._tdef = tdef;
     if (tdef) {
-      autoRemove<Instance>(tdef, this, 'tdef');
+      autoRemove<Instance<T, P>>(tdef, this, 'tdef');
     }
   }
 

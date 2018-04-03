@@ -1,13 +1,14 @@
 import { observable, computed, action } from 'mobx';
 
 import { hash, autoRemove } from '../utils';
-import { Element, JSONObject } from './Element';
+import { JSONObject } from './Element';
 import { Channel } from './Channel';
 import { Port } from './Port';
 import { Model } from './Model';
 import { KevoreeFactory } from '../factory';
+import { ChildElement } from './ChildElement';
 
-export class Binding extends Element<Model> {
+export class Binding extends ChildElement<Model> {
   @observable private _channel: Channel | null = null;
   @observable private _port: Port | null = null;
 

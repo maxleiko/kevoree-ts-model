@@ -36,6 +36,6 @@ export interface KevoreeVisitor {
   visitInstance(instance: Instance): void;
   visitDeployUnit(du: DeployUnit): void;
   visitTypeDefinition(tdef: TypeDefinition): void;
-  visitNamed(named: Named): void;
+  visitNamed<P extends Element>(named: Named<P>): void;
   visitElement(elem: Element): void;
 }
