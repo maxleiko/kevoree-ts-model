@@ -30,7 +30,8 @@ export abstract class Named<P extends Element> extends ChildElement<P> {
     this._name = name;
   }
 
-  fromJSON(data: JSONObject, _factory: KevoreeFactory) {
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
+    super.fromJSON(data, factory);
     if (data.name) {
       this._name = data.name as string;
     }

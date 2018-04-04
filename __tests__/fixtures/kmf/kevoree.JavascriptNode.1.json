@@ -1,0 +1,33 @@
+{
+  "class": "org.kevoree.NodeType@name=JavascriptNode,version=1",
+  "abstract": "false",
+  "name": "JavascriptNode",
+  "version": "1",
+  "deployUnits": [],
+  "superTypes": [],
+  "dictionaryType": [
+    {
+      "class": "org.kevoree.DictionaryType@0.0",
+      "generated_KMF_ID": "0.0",
+      "attributes": [
+        {
+          "class": "org.kevoree.DictionaryAttribute@logLevel",
+          "fragmentDependant": "false",
+          "optional": "false",
+          "name": "logLevel",
+          "state": "false",
+          "datatype": "STRING",
+          "defaultValue": "INFO",
+          "genericTypes": []
+        }
+      ]
+    }
+  ],
+  "metaData": [
+    {
+      "class": "org.kevoree.Value@description",
+      "name": "description",
+      "value": "Kevoree JS standard node platform"
+    }
+  ]
+}

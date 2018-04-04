@@ -2,9 +2,16 @@ import { JSONObject } from '../impl';
 
 const propAdapter: any = {
   _className: 'class',
+  metas: (parent: any) => {
+    if (parent.filters) {
+      return 'filters';
+    }
+    return 'metaData';
+  },
   dictionary: 'dictionaryType',
   inputs: 'provided',
   outputs: 'required',
+  hash: 'hashcode',
 };
 
 function kmfToPort(val: any[]) {
@@ -36,9 +43,20 @@ const objAdapter: any = {
     if (val.startsWith('org.kevoree.DictionaryAttribute')) {
       return 'ParamType';
     }
+    if (val.startsWith('org.kevoree.DeployUnit')) {
+      return 'DeployUnit';
+    }
+    if (val.startsWith('org.kevoree.Value')) {
+      return 'Value';
+    }
     return val;
   },
-  version: (val: string) => parseInt(val, 10),
+  version: (val: string, parent: any) => {
+    if (parent.class.startsWith('org.kevoree.DeployUnit')) {
+      return val;
+    }
+    return parseInt(val, 10);
+  },
   fragmentDependant: (val: string) => val === 'true',
   dictionary: (val: any[]) => {
     if (val.length > 0) {
@@ -57,11 +75,16 @@ const objAdapter: any = {
 const handler: ProxyHandler<JSONObject> = {
   get: (obj, prop) => {
     // map new prop to KMF's prop if needed
-    const adaptedProp = propAdapter[prop] || prop;
+    let adaptedProp;
+    if (typeof propAdapter[prop] === 'function') {
+      adaptedProp = propAdapter[prop](obj);
+    } else {
+      adaptedProp = propAdapter[prop] || prop;
+    }
     // retrieve KMF's value
     const kmfValue = obj[adaptedProp];
     // adapt value to new value if needed
-    return objAdapter[prop] ? objAdapter[prop](kmfValue) : kmfValue;
+    return objAdapter[prop] ? objAdapter[prop](kmfValue, obj) : kmfValue;
   },
 };
 

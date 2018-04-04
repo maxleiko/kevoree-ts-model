@@ -10,8 +10,19 @@ describe('KMF converter', () => {
       loadFile('new/kevoree.JavaNode.2.json'),
     ]).then(([kmf, now]) => {
       const fromKMF = loader.parseKMF(kmf);
-      const fromNow = loader.parse(now);
-      expect(JSON.parse(JSON.stringify(fromKMF))).toEqual(JSON.parse(JSON.stringify(fromNow)));
+      const fromNow = JSON.parse(now);
+      expect(JSON.parse(JSON.stringify(fromKMF))).toEqual(fromNow);
+    });
+  });
+
+  it('kevoree.JavascriptNode.1', () => {
+    return Promise.all([
+      loadFile('kmf/kevoree.JavascriptNode.1.json'),
+      loadFile('new/kevoree.JavascriptNode.1.json'),
+    ]).then(([kmf, now]) => {
+      const fromKMF = loader.parseKMF(kmf);
+      const fromNow = JSON.parse(now);
+      expect(JSON.parse(JSON.stringify(fromKMF))).toEqual(fromNow);
     });
   });
 
@@ -21,8 +32,19 @@ describe('KMF converter', () => {
       loadFile('new/kevoree.Ticker.1.json'),
     ]).then(([kmf, now]) => {
       const fromKMF = loader.parseKMF(kmf);
-      const fromNow = loader.parse(now);
-      expect(JSON.parse(JSON.stringify(fromKMF))).toEqual(JSON.parse(JSON.stringify(fromNow)));
+      const fromNow = JSON.parse(now);
+      expect(JSON.parse(JSON.stringify(fromKMF))).toEqual(fromNow);
+    });
+  });
+
+  it('kevoree.kevoree-node-javascript.5.5.19', () => {
+    return Promise.all([
+      loadFile('kmf/kevoree.kevoree-node-javascript.5.5.19.json'),
+      loadFile('new/kevoree.kevoree-node-javascript.5.5.19.json'),
+    ]).then(([kmf, now]) => {
+      const fromKMF = loader.parseKMF(kmf);
+      const fromNow = JSON.parse(now);
+      expect(JSON.parse(JSON.stringify(fromKMF))).toEqual(fromNow);
     });
   });
 });

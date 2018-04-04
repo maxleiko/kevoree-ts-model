@@ -151,6 +151,7 @@ export class Model extends Element {
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {
+    super.fromJSON(data, factory);
     if (data.namespaces) {
       const namespaces = data.namespaces as { [s: string]: any };
       Object.keys(namespaces).forEach((key) => {

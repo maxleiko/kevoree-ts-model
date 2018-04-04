@@ -1,0 +1,15 @@
+{
+  "class": "org.kevoree.DeployUnit@hashcode=3abebbb338efaaacf20d2085666782fe,name=kevoree-node-javascript,version=5.5.19",
+  "name": "kevoree-node-javascript",
+  "hashcode": "3abebbb338efaaacf20d2085666782fe",
+  "url": "",
+  "version": "5.5.19",
+  "requiredLibs": [],
+  "filters": [
+    {
+      "class": "org.kevoree.Value@platform",
+      "name": "platform",
+      "value": "js"
+    }
+  ]
+}

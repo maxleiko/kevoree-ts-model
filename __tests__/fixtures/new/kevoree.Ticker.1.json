@@ -7,31 +7,33 @@
     "random": {
       "_className": "ParamType",
       "fragmentDependant": false,
-      "optional": true,
       "name": "random",
       "datatype": "BOOLEAN",
-      "defaultValue": "false"
+      "defaultValue": "false",
+      "metas": {}
     },
     "period": {
       "_className": "ParamType",
       "fragmentDependant": false,
-      "optional": true,
       "name": "period",
       "datatype": "LONG",
-      "defaultValue": "3000"
+      "defaultValue": "3000",
+      "metas": {}
     }
   },
   "metas": {
     "description": {
       "_className": "Value",
       "name": "description",
-      "value": "A Kevoree component that sends a 'tick' message at user-defined intervals"
+      "value": "A Kevoree component that sends a 'tick' message at user-defined intervals",
+      "metas": {}
     }
   },
   "outputs": {
     "tick": {
-      "class": "org.kevoree.PortType@tick",
-      "name": "tick"
+      "_className": "PortType",
+      "name": "tick",
+      "metas": {}
     }
   },
   "inputs": {}

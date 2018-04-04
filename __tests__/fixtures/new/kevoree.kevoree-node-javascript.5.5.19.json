@@ -1,0 +1,14 @@
+{
+  "_className": "DeployUnit",
+  "name": "kevoree-node-javascript",
+  "hash": "3abebbb338efaaacf20d2085666782fe",
+  "version": "5.5.19",
+  "metas": {
+    "platform": {
+      "_className": "Value",
+      "metas": {},
+      "name": "platform",
+      "value": "js"
+    }
+  }
+}

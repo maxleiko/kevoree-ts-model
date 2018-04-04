@@ -8,7 +8,6 @@ import { KevoreeFactory } from '../factory';
 export class DeployUnit extends Named<Namespace> {
   @observable private _hash: string = '';
   @observable private _version: string = '';
-  @observable private _platform: string = '';
 
   @computed
   get _key(): string {
@@ -33,15 +32,6 @@ export class DeployUnit extends Named<Namespace> {
     this._version = value;
   }
 
-  @computed
-  get platform(): string {
-    return this._platform;
-  }
-
-  set platform(value: string) {
-    this._platform = value;
-  }
-
   @action
   withHash(hash: string): this {
     this.hash = hash;
@@ -54,12 +44,6 @@ export class DeployUnit extends Named<Namespace> {
     return this;
   }
 
-  @action
-  withPlatform(platform: string): this {
-    this.platform = platform;
-    return this;
-  }
-
   fromJSON(data: JSONObject, _factory: KevoreeFactory) {
     super.fromJSON(data, _factory);
     if (data.hash) {
@@ -67,9 +51,6 @@ export class DeployUnit extends Named<Namespace> {
     }
     if (data.version) {
       this._version = data.version as string;
-    }
-    if (data.platform) {
-      this._platform = data.platform as string;
     }
   }
 

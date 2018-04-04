@@ -33,6 +33,11 @@ export abstract class Element {
     this._deleting = deleting;
   }
 
+  @computed
+  get metas(): Array<Value<this>> {
+    return Array.from(this._metas.values());
+  }
+
   @action
   addMeta(meta: Value<this>) {
     if (!meta._key) {
@@ -42,6 +47,11 @@ export abstract class Element {
     meta.parent = this;
     meta.refInParent = 'metas';
     keyUpdater(meta, this._metas);
+  }
+
+  @action
+  delete() {
+    this._deleting = true;
   }
 
   toJSON(_key?: any): { [s: string]: any } {
@@ -63,12 +73,19 @@ export abstract class Element {
     return clone;
   }
 
-  @action
-  delete() {
-    this._deleting = true;
+  fromJSON(data: JSONObject, factory: KevoreeFactory) {
+    if (data.metas) {
+      const metas = data.metas as { [s: string]: any };
+      Object.keys(metas).forEach((key) => {
+        const v = factory.createValue<this>();
+        v.parent = this;
+        v.refInParent = 'metas';
+        v.fromJSON(metas[key], factory);
+        this.addMeta(v);
+      });
+    }
   }
 
-  abstract fromJSON(data: JSONObject, _factory: KevoreeFactory): void;
   abstract get _key(): string | null;
 
   get _className(): string {

@@ -1,0 +1,24 @@
+{
+  "_className": "NodeType",
+  "metas": {
+    "description": {
+      "_className": "Value",
+      "metas": {},
+      "name": "description",
+      "value": "Kevoree JS standard node platform"
+    }
+  },
+  "name": "JavascriptNode",
+  "version": 1,
+  "deployUnits": {},
+  "dictionary": {
+    "logLevel": {
+      "_className": "ParamType",
+      "metas": {},
+      "name": "logLevel",
+      "fragmentDependant": false,
+      "datatype": "STRING",
+      "defaultValue": "INFO"
+    }
+  }
+}
