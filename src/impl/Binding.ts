@@ -17,23 +17,9 @@ export class Binding extends ChildElement<Model> {
     return this._channel;
   }
 
-  set channel(chan: Channel | null) {
-    this._channel = chan;
-    if (chan) {
-      autoRemove<Binding>(chan, this, 'channel');
-    }
-  }
-
   @computed
   get port() {
     return this._port;
-  }
-
-  set port(port: Port | null) {
-    this._port = port;
-    if (port) {
-      autoRemove<Binding>(port, this, 'port');
-    }
   }
 
   @computed
@@ -49,8 +35,16 @@ export class Binding extends ChildElement<Model> {
 
   @action
   withChannelAndPort(channel: Channel, port: Port): this {
-    this.channel = channel;
-    this.port = port;
+    this._channel = channel;
+    if (channel) {
+      autoRemove<Binding>(channel, this, 'channel');
+    }
+    this._port = port;
+    if (port) {
+      autoRemove<Binding>(port, this, 'port');
+    }
+    channel.addBinding(this);
+    port.addBinding(this);
     return this;
   }
 
