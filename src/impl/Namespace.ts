@@ -6,12 +6,9 @@ import { TypeDefinition } from './TypeDefinition';
 import { DeployUnit } from './DeployUnit';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
-import { createTransformer } from 'mobx-utils';
 import { keyUpdater } from '../utils';
 
 export class Namespace extends Named<Model> {
-  getTdef = createTransformer<string, TypeDefinition | undefined>((name) => this._tdefs.get(name));
-
   @observable private _tdefs: Map<string, TypeDefinition> = new Map();
   @observable private _dus: Map<string, DeployUnit> = new Map();
 
@@ -51,6 +48,10 @@ export class Namespace extends Named<Model> {
     du.parent = this;
     du.refInParent = 'dus';
     keyUpdater(du, this._dus);
+  }
+
+  getTdef(name: string): TypeDefinition | undefined {
+    return this._tdefs.get(name);
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

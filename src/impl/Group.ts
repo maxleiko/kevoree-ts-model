@@ -17,7 +17,22 @@ export class Group extends Instance<GroupType, Model> {
       throw new Error(`Cannot attach node in ${this._key}: node key is not set`);
     }
     this._nodes.set(node._key, node);
+    if (!node.getGroup(this._key!)) {
+      node.attachGroup(this);
+    }
     keyUpdater(node, this._nodes);
+  }
+
+  @action
+  detachNode(node: Node) {
+    if (!node._key) {
+      throw new Error(`Cannot detach node in ${this._key}: node key is not set`);
+    }
+    this._nodes.delete(node._key);
+  }
+
+  getNode(name: string): Node | undefined {
+    return this._nodes.get(name);
   }
 
   @computed

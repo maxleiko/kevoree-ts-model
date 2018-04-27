@@ -1,5 +1,4 @@
 import { observable, action, computed } from 'mobx';
-import { createTransformer } from 'mobx-utils';
 
 import { Element, JSONObject } from './Element';
 import { Node } from './Node';
@@ -11,14 +10,6 @@ import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { keyUpdater } from '../utils/key-updater';
 
 export class Model extends Element {
-  getNode = createTransformer<string, Node | undefined>((key) => this._nodes.get(key));
-  getGroup = createTransformer<string, Group | undefined>((key) => this._groups.get(key));
-  getChannel = createTransformer<string, Channel | undefined>((key) => this._channels.get(key));
-  getBinding = createTransformer<string, Binding | undefined>((key) => this._bindings.get(key));
-  getNamespace = createTransformer<string, Namespace | undefined>((key) =>
-    this._namespaces.get(key),
-  );
-
   @observable private _nodes: Map<string, Node> = new Map();
   @observable private _groups: Map<string, Group> = new Map();
   @observable private _channels: Map<string, Channel> = new Map();
@@ -118,6 +109,26 @@ export class Model extends Element {
       this._namespaces.delete(ns._key);
     }
     ns.parent = null;
+  }
+
+  getNode(key: string): Node | undefined {
+    return this._nodes.get(key);
+  }
+  
+  getGroup(key: string): Group | undefined {
+    return this._groups.get(key);
+  }
+
+  getChannel(key: string): Channel | undefined {
+    return this._channels.get(key);
+  }
+
+  getBinding(key: string): Binding | undefined {
+    return this._bindings.get(key);
+  }
+
+  getNamespace(key: string): Namespace | undefined {
+    return this._namespaces.get(key);
   }
 
   @computed

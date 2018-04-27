@@ -1,5 +1,4 @@
 import { observable, computed, action } from 'mobx';
-import { createTransformer } from 'mobx-utils';
 
 import { Value } from './Value';
 import { parse, keyUpdater } from '../utils';
@@ -10,9 +9,6 @@ export interface JSONObject {
 }
 
 export abstract class Element {
-  getByPath = createTransformer<string, Element | null>((p) => this._getByPath(p));
-  getMeta = createTransformer<string, Value<this> | undefined>((name) => this._metas.get(name));
-
   @observable private _deleting: boolean = false;
   @observable private _metas: Map<string, Value<this>> = new Map();
 
@@ -54,6 +50,26 @@ export abstract class Element {
     this._deleting = true;
   }
 
+  getByPath(path: string): Element | null {
+    if (path === '/') {
+      return this;
+    }
+    let graph: any[] | null;
+    try {
+      graph = parse(path);
+    } catch (err) {
+      throw new Error(`Unable to parse given path "${path}" (${err.message})`);
+    }
+    if (graph) {
+      return this._getByGraph(graph);
+    }
+    return null;
+  }
+
+  getMeta(name: string): Value<this> | undefined {
+    return this._metas.get(name);
+  }
+
   toJSON(_key?: any): { [s: string]: any } {
     const self = this as any;
     const clone: any = { _className: this._className };
@@ -90,22 +106,6 @@ export abstract class Element {
 
   get _className(): string {
     return 'Element';
-  }
-
-  private _getByPath(path: string): Element | null {
-    if (path === '/') {
-      return this;
-    }
-    let graph: any[] | null;
-    try {
-      graph = parse(path);
-    } catch (err) {
-      throw new Error(`Unable to parse given path "${path}" (${err.message})`);
-    }
-    if (graph) {
-      return this._getByGraph(graph);
-    }
-    return null;
   }
 
   private _getByGraph(graph: Array<{ [s: string]: any }>): Element | null {

@@ -7,15 +7,9 @@ import { NodeType } from './NodeType';
 import { Group } from './Group';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
-import { createTransformer } from 'mobx-utils';
 import { keyUpdater } from '../utils';
 
 export class Node extends Instance<NodeType, Model> {
-  getComponent = createTransformer<string, Component | undefined>((name) =>
-    this._components.get(name),
-  );
-  getGroup = createTransformer<string, Group | undefined>((name) => this._groups.get(name));
-
   @observable private _components: Map<string, Component> = new Map();
   @observable private _groups: Map<string, Group> = new Map();
 
@@ -54,6 +48,9 @@ export class Node extends Instance<NodeType, Model> {
       throw new Error(`Cannot attach group in ${this._key}: group key is not set`);
     }
     this._groups.set(group._key, group);
+    if (!group.getNode(this._key!)) {
+      group.attachNode(this);
+    }
     keyUpdater(group, this._groups);
   }
 
@@ -61,8 +58,16 @@ export class Node extends Instance<NodeType, Model> {
   detachGroup(group: Group) {
     if (group._key) {
       this._groups.delete(group._key);
-      // TODO detach group also
+      group.detachNode(this);
     }
+  }
+
+  getComponent(name: string): Component | undefined {
+    return this._components.get(name);
+  }
+
+  getGroup(name: string): Group | undefined {
+    return this._groups.get(name);
   }
 
   toJSON() {

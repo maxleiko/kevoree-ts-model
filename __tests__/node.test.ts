@@ -7,38 +7,36 @@ describe('Node', () => {
     expect(node.groups.length).toEqual(0);
   });
 
-  describe('add elements to maps', () => {
-    it('add component', () => {
+  describe('components', () => {
+    it('add', () => {
       const node = new Node().withName('node0');
       const comp = new Component().withName('comp');
-      node.addComponent(comp);
-      expect(node.getComponent('comp')).toBe(comp);
-    });
 
-    it('add group', () => {
-      const node = new Node().withName('node0');
-      const group = new Group().withName('sync');
-      node.attachGroup(group);
-      expect(node.getGroup('sync')).toBe(group);
+      node.addComponent(comp);
+
+      expect(node.getComponent('comp')).toBe(comp);
+      expect(comp.parent).toBe(node);
+
+      node.removeComponent(comp);
+
+      expect(node.getComponent('comp')).toBeUndefined();
+      expect(comp.parent).toBeNull();
     });
   });
 
-  describe('remove elements from maps', () => {
-    it('remove component', () => {
-      const node = new Node().withName('node0');
-      const comp = new Component().withName('comp');
-      node.addComponent(comp);
-      node.removeComponent(comp);
-      expect(node.getComponent('comp')).toBeUndefined();
-    });
+  describe('groups', () => {
+    const node = new Node().withName('node');
+    const group = new Group().withName('group');
 
-    it('remove group', () => {
-      const node = new Node().withName('node0');
-      const group = new Group().withName('sync');
-      node.attachGroup(group);
-      node.detachGroup(group);
-      expect(node.getGroup('sync')).toBeUndefined();
-    });
+    node.attachGroup(group);
+
+    expect(node.getGroup('group')).toBe(group);
+    expect(group.getNode('node')).toBe(node);
+
+    node.detachGroup(group);
+
+    expect(node.getGroup('group')).toBeUndefined();
+    expect(group.getNode('node')).toBeUndefined();
   });
 
   describe('map keys get automatically updated on children key changes', () => {

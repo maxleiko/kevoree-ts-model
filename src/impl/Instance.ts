@@ -7,15 +7,12 @@ import { Model } from './Model';
 import { Node } from './Node';
 import { Value } from './Value';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
-import { createTransformer } from 'mobx-utils';
 import { keyUpdater, autoRemove } from '../utils';
 
 export abstract class Instance<
   T extends TypeDefinition = TypeDefinition,
   P extends Element = Model | Node
 > extends Named<P> {
-  getParam = createTransformer<string, Value<this> | undefined>((name) => this._params.get(name));
-
   @observable private _started: boolean = false;
   @observable private _tdef: T | null = null;
   @observable private _params: Map<string, Value<this>> = new Map();
@@ -61,6 +58,10 @@ export abstract class Instance<
   withTdef(tdef: T | null): this {
     this.tdef = tdef;
     return this;
+  }
+
+  getParam(name: string): Value<this> | undefined {
+    return this._params.get(name);
   }
 
   toJSON(_key?: any): { [s: string]: any } {
