@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx';
 
-import { hash, autoRemove } from '../utils';
+import { hash } from '../utils';
 import { JSONObject } from './Element';
 import { Channel } from './Channel';
 import { Port } from './Port';
@@ -17,32 +17,62 @@ export class Binding extends ChildElement<Model> {
     return this._channel;
   }
 
+  set channel(chan: Channel | null) {
+    if (chan && this._port) {
+      if (this._channel) {
+        this._channel.removeBinding(this._key!);
+      }
+      this._channel = chan;
+      chan.addBinding(this);
+    } else {
+      throw new Error(
+        `Cannot set a binding's channel if binding's port is null (use withChannelAndPort(...))`,
+      );
+    }
+  }
+
   @computed
   get port() {
     return this._port;
   }
 
+  set port(port: Port | null) {
+    if (port && this._channel) {
+      if (this._port) {
+        this._port.removeBinding(this._key!);
+      }
+      this._port = port;
+      port.addBinding(this);
+    } else {
+      throw new Error(
+        `Cannot set a binding's port if binding's channel is null (use withChannelAndPort(...))`,
+      );
+    }
+  }
+
   @computed
   get _key(): string | null {
-    if (this._channel && this._port) {
-      if (this._channel._key && this._port._key) {
-        return hash(`${this._channel._key}_${this._port._key}`);
+    if (this.deleting) {
+      try {
+        return this._generateKey();
+      } catch {
+        // ignore key error when deleting
+        return null;
       }
-      throw new Error('Cannot get binding key: channel.key & port.key must be set');
     }
-    throw new Error('Cannot get binding key: channel & port must be set');
+    return this._generateKey();
   }
 
   @action
   withChannelAndPort(channel: Channel, port: Port): this {
+    if (this._channel) {
+      if (this._port) {
+        this._channel.removeBinding(this._key!);
+        this._port.removeBinding(this._key!);
+      }
+    }
     this._channel = channel;
-    if (channel) {
-      autoRemove<Binding>(channel, this, 'channel');
-    }
     this._port = port;
-    if (port) {
-      autoRemove<Binding>(port, this, 'port');
-    }
     channel.addBinding(this);
     port.addBinding(this);
     return this;
@@ -74,7 +104,28 @@ export class Binding extends ChildElement<Model> {
     }
   }
 
+  @action
+  delete(): void {
+    super.delete();
+    if (this._channel && this._port) {
+      this._channel.removeBinding(this._key!);
+      this._port.removeBinding(this._key!);
+      this._port = null;
+      this._channel = null;
+    }
+  }
+
   get _className(): string {
     return 'Binding';
+  }
+
+  private _generateKey() {
+    if (this._channel && this._port) {
+      if (this._channel._key && this._port._key) {
+        return hash(`${this._channel._key}_${this._port._key}`);
+      }
+      throw new Error('Cannot get binding key: channel.key & port.key must be set');
+    }
+    throw new Error('Cannot get binding key: channel & port must be set');
   }
 }

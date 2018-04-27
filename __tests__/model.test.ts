@@ -1,4 +1,5 @@
-import { Model, Node, Group, Channel, Namespace, Value } from '../src';
+import { Model, Node, Group, Channel, Namespace, Value, Binding, Component, Port } from '../src';
+import { hash } from '../src/utils';
 
 describe('Model', () => {
   it('create an empty model', () => {
@@ -67,13 +68,24 @@ describe('Model', () => {
   });
 
   describe('map keys get automatically updated on children key changes', () => {
-    it('for nodes', () => {
-      const model = new Model();
-      const node = new Node().withName('node0');
-      model.addNode(node);
-      node.name = 'newName';
-      expect(model.getNode('newName')).toBe(node);
-      expect(model.getNode('node0')).toBeUndefined();
+    describe('for nodes', () => {
+      describe('using ref', () => {
+        const model = new Model();
+        const node = new Node().withName('node0');
+        model.addNode(node);
+        node.name = 'newName';
+        expect(model.getNode('newName')).toBe(node);
+        expect(model.getNode('node0')).toBeUndefined();
+      });
+
+      describe('using getter', () => {
+        const model = new Model();
+        model.addNode(new Node().withName('node0'));
+        const node = model.getNode('node0');
+        node.name = 'newName';
+        expect(model.getNode('newName')).toBe(node);
+        expect(model.getNode('node0')).toBeUndefined();
+      });
     });
 
     it('for groups', () => {
@@ -101,6 +113,24 @@ describe('Model', () => {
       ns.name = 'newName';
       expect(model.getNamespace('newName')).toBe(ns);
       expect(model.getNamespace('ns0')).toBeUndefined();
+    });
+
+    it('for bindings', () => {
+      const model = new Model();
+      const chan = new Channel().withName('chan');
+      const node = new Node().withName('node');
+      const comp = new Component().withName('comp');
+      const port = new Port().withName('port');
+      node.addComponent(comp);
+      comp.addInput(port);
+      const binding = new Binding().withChannelAndPort(chan, port);
+      model.addBinding(binding);
+      expect(model.getBinding(hash(`${chan._key}_${port._key}`))).toBe(binding);
+
+      const chan2 = new Channel().withName('otherChan');
+      binding.channel = chan2;
+      expect(model.getBinding(hash(`${chan2._key}_${port._key}`))).toBe(binding);
+      expect(model.getBinding(hash(`${chan._key}_${port._key}`))).toBeUndefined();
     });
   });
 

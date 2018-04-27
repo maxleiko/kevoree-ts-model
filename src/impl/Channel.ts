@@ -25,6 +25,11 @@ export class Channel extends Instance<ChannelType, Model> {
     keyUpdater(binding, this._bindings);
   }
 
+  @action
+  removeBinding(key: string) {
+    this._bindings.delete(key);
+  }
+
   toJSON(key: any): { [s: string]: any } {
     const o = super.toJSON(key);
     o.bindings = this.bindings.map((binding) => binding.path);
