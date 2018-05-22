@@ -7,6 +7,7 @@ import { DeployUnit } from './DeployUnit';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 import { keyUpdater } from '../utils';
+import { map2json } from '../utils/map2json';
 
 export class Namespace extends Named<Model> {
   @observable private _tdefs: Map<string, TypeDefinition> = new Map();
@@ -57,8 +58,8 @@ export class Namespace extends Named<Model> {
   toJSON(key?: any) {
     return {
       ...super.toJSON(key),
-      tdefs: (this._tdefs as any).toJSON(),
-      dus: (this._dus as any).toJSON(),
+      tdefs: map2json(this._tdefs),
+      dus: map2json(this._dus),
     };
   }
 

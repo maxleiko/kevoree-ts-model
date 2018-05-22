@@ -8,6 +8,7 @@ import { Node } from './Node';
 import { Value } from './Value';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { keyUpdater, autoRemove } from '../utils';
+import { map2json } from '../utils/map2json';
 
 export abstract class Instance<
   T extends TypeDefinition = TypeDefinition,
@@ -68,7 +69,7 @@ export abstract class Instance<
     return {
       ...super.toJSON(key),
       tdef: this._tdef ? this._tdef.path : null,
-      params: (this._params as any).toJSON(),
+      params: map2json(this._params),
     };
   }
 

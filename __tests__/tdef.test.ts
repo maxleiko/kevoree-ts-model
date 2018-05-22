@@ -69,9 +69,7 @@ describe('TypeDefinition', () => {
 
       const newModel = new JSONKevoreeLoader().parse<Model>(JSON.stringify(model));
 
-      console.log(node.toJSON());
-
-      // expect(newModel.nodes[0].toJSON()).toEqual(node.toJSON());
+      expect(newModel.nodes[0].toJSON()).toEqual(node.toJSON());
       expect(newModel.nodes[0].tdef.toJSON()).toEqual(nodeType.toJSON());
       expect(newModel.nodes[0].components[0].toJSON()).toEqual(comp.toJSON());
       expect(newModel.nodes[0].components[0].tdef.toJSON()).toEqual(compType.toJSON());

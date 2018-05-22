@@ -51,13 +51,6 @@ export abstract class ChildElement<P extends Element> extends Element {
     return super.getByPath(path);
   }
 
-  toJSON(key?: any) {
-    return {
-      ...super.toJSON(key),
-      parent: this._parent ? this._parent.path : null,
-    };
-  }
-
   @action
   delete() {
     super.delete();

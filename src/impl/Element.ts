@@ -3,6 +3,7 @@ import { observable, computed, action } from 'mobx';
 import { Value } from './Value';
 import { parse, keyUpdater } from '../utils';
 import { KevoreeFactory } from '../factory';
+import { map2json } from '../utils/map2json';
 
 export interface JSONObject {
   [s: string]: string | number | boolean | object | undefined | null;
@@ -73,7 +74,7 @@ export abstract class Element {
   toJSON(_key?: any) {
     return {
       _className: this._className,
-      metas: (this._metas as any).toJSON()
+      metas: map2json(this._metas),
     };
   }
 

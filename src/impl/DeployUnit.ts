@@ -44,6 +44,14 @@ export class DeployUnit extends Named<Namespace> {
     return this;
   }
 
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      hash: this._hash,
+      version: this._version,
+    };
+  }
+
   fromJSON(data: JSONObject, _factory: KevoreeFactory) {
     super.fromJSON(data, _factory);
     if (data.hash) {

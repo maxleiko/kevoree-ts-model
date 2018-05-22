@@ -8,6 +8,7 @@ import { Group } from './Group';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 import { keyUpdater } from '../utils';
+import { map2json } from '../utils/map2json';
 
 export class Node extends Instance<NodeType, Model> {
   @observable private _components: Map<string, Component> = new Map();
@@ -74,7 +75,7 @@ export class Node extends Instance<NodeType, Model> {
     return {
       ...super.toJSON(key),
       groups: this.groups.map((g) => g.path),
-      components: this.components.map((c) => c.toJSON()),
+      components: map2json(this._components),
     };
   }
 

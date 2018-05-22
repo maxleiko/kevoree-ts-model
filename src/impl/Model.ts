@@ -8,6 +8,7 @@ import { Channel } from './Channel';
 import { Binding } from './Binding';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { keyUpdater } from '../utils/key-updater';
+import { map2json } from '../utils/map2json';
 
 export class Model extends Element {
   @observable private _nodes: Map<string, Node> = new Map();
@@ -159,6 +160,17 @@ export class Model extends Element {
   @computed
   get _key(): string {
     return '/';
+  }
+
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      nodes: map2json(this._nodes),
+      groups: map2json(this._groups),
+      bindings: map2json(this._bindings),
+      channels: map2json(this._channels),
+      namespaces: map2json(this._namespaces),
+    };
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

@@ -5,6 +5,7 @@ import { PortType } from './PortType';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 import { keyUpdater } from '../utils';
+import { map2json } from '../utils/map2json';
 
 export class ComponentType extends TypeDefinition {
   @observable private _inputs: Map<string, PortType> = new Map();
@@ -49,6 +50,14 @@ export class ComponentType extends TypeDefinition {
   withOutput(port: PortType): this {
     this.addOutput(port);
     return this;
+  }
+
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      inputs: map2json(this._inputs),
+      outputs: map2json(this._outputs),
+    };
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

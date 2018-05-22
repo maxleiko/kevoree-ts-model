@@ -6,6 +6,7 @@ import { DeployUnit } from './DeployUnit';
 import { ParamType, JSONObject } from '.';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { keyUpdater } from '../utils';
+import { map2json } from '../utils/map2json';
 
 export abstract class TypeDefinition extends Named<Namespace> {
   @observable private _version: number | null = null;
@@ -76,8 +77,8 @@ export abstract class TypeDefinition extends Named<Namespace> {
     return {
       ...super.toJSON(key),
       version: this._version,
-      deployUnits: (this._deployUnits as any).toJSON(),
-      dictionary: (this._dictionary as any).toJSON(),
+      deployUnits: map2json(this._deployUnits),
+      dictionary: map2json(this._dictionary),
     };
   }
 

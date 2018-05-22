@@ -7,6 +7,7 @@ import { ComponentType } from './ComponentType';
 import { KevoreeFactory } from '../factory/KevoreeFactory';
 import { JSONObject } from '.';
 import { keyUpdater } from '../utils';
+import { map2json } from '../utils/map2json';
 
 export class Component extends Instance<ComponentType, Node> {
   @observable private _inputs: Map<string, Port> = new Map();
@@ -46,8 +47,8 @@ export class Component extends Instance<ComponentType, Node> {
   toJSON(key?: any) {
     return {
       ...super.toJSON(key),
-      inputs: (this.inputs as any).toJSON(),
-      outputs: (this.inputs as any).toJSON(),
+      inputs: map2json(this._inputs),
+      outputs: map2json(this._outputs),
     };
   }
 
