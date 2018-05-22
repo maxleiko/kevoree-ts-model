@@ -40,10 +40,11 @@ export class Group extends Instance<GroupType, Model> {
     return Array.from(this._nodes.values());
   }
 
-  toJSON(key: any): { [s: string]: any } {
-    const o = super.toJSON(key);
-    o.nodes = this.nodes.map((node) => node.path);
-    return o;
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      nodes: this.nodes.map((n) => n.path),
+    };
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

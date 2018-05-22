@@ -64,12 +64,12 @@ export abstract class Instance<
     return this._params.get(name);
   }
 
-  toJSON(_key?: any): { [s: string]: any } {
-    const o = super.toJSON(_key);
-    if (this._tdef) {
-      o.tdef = this._tdef.path;
-    }
-    return o;
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      tdef: this._tdef ? this._tdef.path : null,
+      params: (this._params as any).toJSON(),
+    };
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {
@@ -80,7 +80,7 @@ export abstract class Instance<
     if (data.tdef) {
       const tdef = this.parent!.getByPath(data.tdef as string) as T | null;
       if (tdef) {
-        this._tdef = tdef;
+        this.tdef = tdef;
       }
     }
     if (data.params) {

@@ -43,6 +43,14 @@ export class Component extends Instance<ComponentType, Node> {
     keyUpdater(port, this._outputs);
   }
 
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      inputs: (this.inputs as any).toJSON(),
+      outputs: (this.inputs as any).toJSON(),
+    };
+  }
+
   fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
     if (data.inputs) {

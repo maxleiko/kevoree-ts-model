@@ -70,10 +70,12 @@ export class Node extends Instance<NodeType, Model> {
     return this._groups.get(name);
   }
 
-  toJSON() {
-    const o = super.toJSON();
-    o.groups = this.groups.map((g) => g.path);
-    return o;
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      groups: this.groups.map((g) => g.path),
+      components: this.components.map((c) => c.toJSON()),
+    };
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

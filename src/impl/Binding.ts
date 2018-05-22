@@ -78,15 +78,12 @@ export class Binding extends ChildElement<Model> {
     return this;
   }
 
-  toJSON() {
-    const o = super.toJSON();
-    if (this._channel) {
-      o.channel = this._channel.path;
-    }
-    if (this._port) {
-      o.port = this._port.path;
-    }
-    return o;
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      channel: this._channel ? this._channel.path : null,
+      port: this._port ? this._port.path : null,
+    };
   }
 
   fromJSON(data: JSONObject, _factory: KevoreeFactory) {

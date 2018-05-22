@@ -48,6 +48,15 @@ export class ParamType<P extends TypeDefinition = TypeDefinition> extends Named<
     this._defaultValue = defaultValue;
   }
 
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      fragmentDependant: this._fragmentDependant,
+      datatype: this._datatype,
+      defaultValue: this._defaultValue,
+    };
+  }
+
   fromJSON(data: JSONObject, _factory: KevoreeFactory) {
     super.fromJSON(data, _factory);
     if ('fragmentDependant' in data) {

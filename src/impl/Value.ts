@@ -22,6 +22,13 @@ export class Value<P extends Element> extends Named<P> {
     return this;
   }
 
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      value: this._value,
+    };
+  }
+
   fromJSON(data: JSONObject, _factory: KevoreeFactory) {
     super.fromJSON(data, _factory);
     if (data.value) {

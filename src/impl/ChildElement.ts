@@ -40,6 +40,24 @@ export abstract class ChildElement<P extends Element> extends Element {
     this._refInParent = ref;
   }
 
+  getByPath(path: string): Element | null {
+    if (path.startsWith('/')) {
+      if (this._parent) {
+        return this._parent.getByPath(path);
+      } else {
+        throw new Error(`Path "${path}" cannot be reached from "${this.path}": no parent set.`);
+      }
+    }
+    return super.getByPath(path);
+  }
+
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      parent: this._parent ? this._parent.path : null,
+    };
+  }
+
   @action
   delete() {
     super.delete();

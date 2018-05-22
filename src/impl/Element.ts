@@ -70,23 +70,11 @@ export abstract class Element {
     return this._metas.get(name);
   }
 
-  toJSON(_key?: any): { [s: string]: any } {
-    const self = this as any;
-    const clone: any = { _className: this._className };
-    // clone all properties
-    for (const prop in self) {
-      if (self.hasOwnProperty(prop)) {
-        if (typeof self[prop] !== 'function') {
-          clone[prop.substr(1)] = self[prop];
-        }
-      }
-    }
-    // clean model
-    delete clone.parent;
-    delete clone.refInParent;
-    delete clone.deleting;
-
-    return clone;
+  toJSON(_key?: any) {
+    return {
+      _className: this._className,
+      metas: (this._metas as any).toJSON()
+    };
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

@@ -29,10 +29,11 @@ export class Port extends Named<Component> {
     this._bindings.delete(key);
   }
 
-  toJSON(key: any): { [s: string]: any } {
-    const o = super.toJSON(key);
-    o.bindings = this.bindings.map((binding) => binding.path);
-    return o;
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      bindings: this.bindings.map((b) => b.path),
+    };
   }
 
   fromJSON(data: JSONObject, factory: KevoreeFactory) {

@@ -54,6 +54,14 @@ export class Namespace extends Named<Model> {
     return this._tdefs.get(name);
   }
 
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      tdefs: (this._tdefs as any).toJSON(),
+      dus: (this._dus as any).toJSON(),
+    };
+  }
+
   fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
 

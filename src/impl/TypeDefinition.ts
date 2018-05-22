@@ -72,6 +72,15 @@ export abstract class TypeDefinition extends Named<Namespace> {
     return this;
   }
 
+  toJSON(key?: any) {
+    return {
+      ...super.toJSON(key),
+      version: this._version,
+      deployUnits: (this._deployUnits as any).toJSON(),
+      dictionary: (this._dictionary as any).toJSON(),
+    };
+  }
+
   fromJSON(data: JSONObject, factory: KevoreeFactory) {
     super.fromJSON(data, factory);
     if ('version' in data) {
