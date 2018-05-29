@@ -54,6 +54,7 @@ describe('Serialization', () => {
         expect(node.toJSON()).toEqual({
           _className: 'Node',
           name: null,
+          started: false,
           components: {},
           groups: [],
           metas: {},
@@ -67,6 +68,7 @@ describe('Serialization', () => {
         expect(node.toJSON()).toEqual({
           _className: 'Group',
           name: null,
+          started: false,
           nodes: [],
           metas: {},
           params: {},
@@ -79,6 +81,7 @@ describe('Serialization', () => {
         expect(node.toJSON()).toEqual({
           _className: 'Channel',
           name: null,
+          started: false,
           bindings: [],
           metas: {},
           params: {},
@@ -91,6 +94,7 @@ describe('Serialization', () => {
         expect(node.toJSON()).toEqual({
           _className: 'Component',
           name: null,
+          started: false,
           inputs: {},
           outputs: {},
           metas: {},

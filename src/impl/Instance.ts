@@ -68,6 +68,7 @@ export abstract class Instance<
   toJSON(key?: any) {
     return {
       ...super.toJSON(key),
+      started: this._started,
       tdef: this._tdef ? this._tdef.path : null,
       params: map2json(this._params),
     };
@@ -87,10 +88,11 @@ export abstract class Instance<
     if (data.params) {
       const params = data.params as { [s: string]: any };
       Object.keys(params).forEach((key) => {
-        const p = (factory as any)[`create${params[key]._className}`]();
-        p.parent = this;
-        p.fromJSON(data, factory);
-        this.addParam(p);
+        const v = factory.createValue<any>();
+        v.parent = this;
+        v.refInParent = 'params';
+        v.fromJSON(params[key], factory);
+        this.addParam(v);
       });
     }
   }
