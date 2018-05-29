@@ -53,4 +53,20 @@ describe('Binding', () => {
     expect(port.bindings.length).toEqual(0);
     expect(chan.bindings.length).toEqual(0);
   });
+
+  it('get binding by path from port child', () => {
+    const model = new Model();
+    const chan = new Channel().withName('chan');
+    model.addChannel(chan);
+    const node = new Node().withName('node');
+    model.addNode(node);
+    const comp = new Component().withName('comp');
+    node.addComponent(comp);
+    const port = new Port().withName('port');
+    comp.addInput(port);
+    const binding = new Binding().withChannelAndPort(chan, port);
+    model.addBinding(binding);
+
+    expect(port.getByPath(binding.path)).toBe(binding);
+  });
 });

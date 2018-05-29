@@ -1,4 +1,4 @@
-import { Node, Value, ParamType, JSONKevoreeLoader } from '../src';
+import { Node, Value, ParamType, JSONKevoreeLoader, Model, Component } from '../src';
 
 describe('Deserialization', () => {
   const loader = new JSONKevoreeLoader();
