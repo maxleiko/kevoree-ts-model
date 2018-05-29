@@ -9,6 +9,7 @@ import {
   Group,
   Channel,
   Binding,
+  Value,
 } from '../src';
 
 describe('Serialization', () => {
@@ -24,6 +25,27 @@ describe('Serialization', () => {
           channels: {},
           namespaces: {},
           metas: {},
+        });
+      });
+
+      it('Model with metas', () => {
+        const model = new Model();
+        model.addMeta(new Value<Model>().withName('foo').withValue('bar'));
+        expect(model.toJSON()).toEqual({
+          _className: 'Model',
+          nodes: {},
+          groups: {},
+          bindings: {},
+          channels: {},
+          namespaces: {},
+          metas: {
+            foo: {
+              _className: 'Value',
+              name: 'foo',
+              value: 'bar',
+              metas: {}
+            }
+          },
         });
       });
   

@@ -10,6 +10,7 @@ import {
   NodeType,
   Namespace,
   ParamType,
+  Value,
 } from '../src';
 
 describe('JSON loader/serializer', () => {
@@ -64,6 +65,12 @@ describe('JSON loader/serializer', () => {
     comp0.addOutput(port0);
     model.addChannel(chan0);
     model.addBinding(bind0);
+    expect(JSON.parse(JSON.stringify(model))).toEqual(JSON.parse(JSON.stringify(model)));
+  });
+
+  it('Model with metas', () => {
+    const model = new Model();
+    model.addMeta(new Value<Model>().withName('foo').withValue('bar'));
     expect(JSON.parse(JSON.stringify(model))).toEqual(JSON.parse(JSON.stringify(model)));
   });
 });
