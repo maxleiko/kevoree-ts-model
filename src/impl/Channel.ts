@@ -42,9 +42,12 @@ export class Channel extends Instance<ChannelType, Model> {
     if (data.bindings) {
       const bindings = data.bindings as string[];
       bindings.forEach((path) => {
-        const binding = this.parent!.getByPath(path) as Binding | null;
+        const binding = this.getByPath(path) as Binding | null;
         if (binding) {
           this.addBinding(binding);
+        } else {
+          // tslint:disable-next-line
+          console.log('UNABLE TO FIND BINDING', path);
         }
       });
     }

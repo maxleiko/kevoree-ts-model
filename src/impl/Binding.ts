@@ -87,16 +87,11 @@ export class Binding extends ChildElement<Model> {
   }
 
   fromJSON(data: JSONObject, _factory: KevoreeFactory) {
-    if (data.channel) {
-      const c = this.parent!.getByPath(data.channel as string) as Channel | null;
-      if (c) {
-        this._channel = c;
-      }
-    }
-    if (data.port) {
-      const p = this.parent!.getByPath(data.port as string) as Port | null;
-      if (p) {
-        this._port = p;
+    if (data.channel && data.port) {
+      const c = this.getByPath(data.channel as string) as Channel | null;
+      const p = this.getByPath(data.port as string) as Port | null;
+      if (c && p) {
+        this.withChannelAndPort(c, p);
       }
     }
   }
