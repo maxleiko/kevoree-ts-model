@@ -31,7 +31,7 @@ export class Value<P extends Element> extends Named<P> {
 
   fromJSON(data: JSONObject, _factory: KevoreeFactory) {
     super.fromJSON(data, _factory);
-    if (data.value) {
+    if (data.value !== undefined && data.value !== null) {
       this._value = data.value as string;
     }
   }

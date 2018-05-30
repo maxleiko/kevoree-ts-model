@@ -1,0 +1,435 @@
+{
+  "_className": "Model",
+  "metas": {},
+  "nodes": {
+    "node0": {
+      "_className": "Node",
+      "metas": {
+        "kwe_position": {
+          "_className": "Value",
+          "metas": {},
+          "name": "kwe_position",
+          "value": "{\"x\":169,\"y\":183}"
+        },
+        "kwe_selected": {
+          "_className": "Value",
+          "metas": {},
+          "name": "kwe_selected",
+          "value": "true"
+        }
+      },
+      "name": "node0",
+      "started": false,
+      "tdef": "/namespaces[kevoree]/tdefs[JavascriptNode:1]",
+      "params": {
+        "logLevel": {
+          "_className": "Value",
+          "metas": {},
+          "name": "logLevel",
+          "value": "INFO"
+        }
+      },
+      "groups": [],
+      "components": {
+        "comp0": {
+          "_className": "Component",
+          "metas": {
+            "kwe_position": {
+              "_className": "Value",
+              "metas": {},
+              "name": "kwe_position",
+              "value": "{\"x\":459,\"y\":125}"
+            },
+            "kwe_selected": {
+              "_className": "Value",
+              "metas": {},
+              "name": "kwe_selected",
+              "value": "false"
+            }
+          },
+          "name": "comp0",
+          "started": false,
+          "tdef": "/namespaces[kevoree]/tdefs[ConsolePrinter:1]",
+          "params": {},
+          "inputs": {
+            "input": {
+              "_className": "Port",
+              "metas": {},
+              "name": "input",
+              "bindings": [
+                "/bindings[104416105]"
+              ]
+            }
+          },
+          "outputs": {}
+        },
+        "comp1": {
+          "_className": "Component",
+          "metas": {
+            "kwe_position": {
+              "_className": "Value",
+              "metas": {},
+              "name": "kwe_position",
+              "value": "{\"x\":80,\"y\":127}"
+            },
+            "kwe_selected": {
+              "_className": "Value",
+              "metas": {},
+              "name": "kwe_selected",
+              "value": "false"
+            }
+          },
+          "name": "comp1",
+          "started": false,
+          "tdef": "/namespaces[kevoree]/tdefs[DockerContainer:1]",
+          "params": {
+            "binds": {
+              "_className": "Value",
+              "metas": {},
+              "name": "binds",
+              "value": ""
+            },
+            "image": {
+              "_className": "Value",
+              "metas": {},
+              "name": "image",
+              "value": ""
+            },
+            "volumesFrom": {
+              "_className": "Value",
+              "metas": {},
+              "name": "volumesFrom",
+              "value": ""
+            },
+            "stopTimeout": {
+              "_className": "Value",
+              "metas": {},
+              "name": "stopTimeout",
+              "value": "5"
+            },
+            "removeVolumes": {
+              "_className": "Value",
+              "metas": {},
+              "name": "removeVolumes",
+              "value": "false"
+            },
+            "dns": {
+              "_className": "Value",
+              "metas": {},
+              "name": "dns",
+              "value": ""
+            },
+            "ports": {
+              "_className": "Value",
+              "metas": {},
+              "name": "ports",
+              "value": ""
+            },
+            "removeOnStop": {
+              "_className": "Value",
+              "metas": {},
+              "name": "removeOnStop",
+              "value": "true"
+            },
+            "environment": {
+              "_className": "Value",
+              "metas": {},
+              "name": "environment",
+              "value": ""
+            },
+            "name": {
+              "_className": "Value",
+              "metas": {},
+              "name": "name",
+              "value": ""
+            },
+            "links": {
+              "_className": "Value",
+              "metas": {},
+              "name": "links",
+              "value": ""
+            },
+            "cmd": {
+              "_className": "Value",
+              "metas": {},
+              "name": "cmd",
+              "value": ""
+            }
+          },
+          "inputs": {},
+          "outputs": {
+            "stdout": {
+              "_className": "Port",
+              "metas": {},
+              "name": "stdout",
+              "bindings": [
+                "/bindings[38707852]"
+              ]
+            },
+            "stderr": {
+              "_className": "Port",
+              "metas": {},
+              "name": "stderr",
+              "bindings": []
+            }
+          }
+        }
+      }
+    }
+  },
+  "groups": {},
+  "bindings": {
+    "38707852": {
+      "_className": "Binding",
+      "metas": {},
+      "channel": "/channels[chan0]",
+      "port": "/nodes[node0]/components[comp1]/outputs[stdout]"
+    },
+    "104416105": {
+      "_className": "Binding",
+      "metas": {},
+      "channel": "/channels[chan0]",
+      "port": "/nodes[node0]/components[comp0]/inputs[input]"
+    }
+  },
+  "channels": {
+    "chan0": {
+      "_className": "Channel",
+      "metas": {
+        "kwe_position": {
+          "_className": "Value",
+          "metas": {},
+          "name": "kwe_position",
+          "value": "{\"x\":288,\"y\":23}"
+        },
+        "kwe_selected": {
+          "_className": "Value",
+          "metas": {},
+          "name": "kwe_selected",
+          "value": "false"
+        }
+      },
+      "name": "chan0",
+      "started": false,
+      "tdef": "/namespaces[kevoree]/tdefs[LocalChannel:1]",
+      "params": {
+        "delay": {
+          "_className": "Value",
+          "metas": {},
+          "name": "delay",
+          "value": "0"
+        }
+      },
+      "bindings": [
+        "/bindings[38707852]",
+        "/bindings[104416105]"
+      ]
+    }
+  },
+  "namespaces": {
+    "kevoree": {
+      "_className": "Namespace",
+      "metas": {},
+      "name": "kevoree",
+      "tdefs": {
+        "JavascriptNode:1": {
+          "_className": "NodeType",
+          "metas": {
+            "description": {
+              "_className": "Value",
+              "metas": {},
+              "name": "description",
+              "value": "Kevoree JS standard node platform"
+            }
+          },
+          "name": "JavascriptNode",
+          "version": 1,
+          "deployUnits": {},
+          "dictionary": {
+            "logLevel": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "logLevel",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": "INFO"
+            }
+          }
+        },
+        "ConsolePrinter:1": {
+          "_className": "ComponentType",
+          "metas": {
+            "description": {
+              "_className": "Value",
+              "metas": {},
+              "name": "description",
+              "value": "Prints incoming message to the console stdout"
+            }
+          },
+          "name": "ConsolePrinter",
+          "version": 1,
+          "deployUnits": {},
+          "dictionary": {},
+          "inputs": {
+            "input": {
+              "_className": "PortType",
+              "metas": {},
+              "name": "input"
+            }
+          },
+          "outputs": {}
+        },
+        "DockerContainer:1": {
+          "_className": "ComponentType",
+          "metas": {
+            "description": {
+              "_className": "Value",
+              "metas": {},
+              "name": "description",
+              "value": "Runs a Docker container based on provided <strong>image</strong> name and the set of options in the attributes: <strong>cmd</strong>, <strong>ports</strong>, <strong>removeOnClose</strong> etc.<br/><br/>Most of the \"multivalued\" attributes can specify several values by using a <em>space</em> separator (ie. cmd: <em>ls -lArth</em>, ports: <em>80 9001:9000</em>, links: <em>foo:bar baz:bar</em>)<br/>By default, <strong>ports</strong> will forward the same port number from host to container. If you want to differentiate ports, use the <em>hostPort:containerPort</em> syntax."
+            }
+          },
+          "name": "DockerContainer",
+          "version": 1,
+          "deployUnits": {},
+          "dictionary": {
+            "binds": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "binds",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            },
+            "image": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "image",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            },
+            "volumesFrom": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "volumesFrom",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            },
+            "stopTimeout": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "stopTimeout",
+              "fragmentDependant": false,
+              "datatype": "INT",
+              "defaultValue": "5"
+            },
+            "removeVolumes": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "removeVolumes",
+              "fragmentDependant": false,
+              "datatype": "BOOLEAN",
+              "defaultValue": "false"
+            },
+            "dns": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "dns",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            },
+            "ports": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "ports",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            },
+            "removeOnStop": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "removeOnStop",
+              "fragmentDependant": false,
+              "datatype": "BOOLEAN",
+              "defaultValue": "true"
+            },
+            "environment": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "environment",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            },
+            "name": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "name",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            },
+            "links": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "links",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            },
+            "cmd": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "cmd",
+              "fragmentDependant": false,
+              "datatype": "STRING",
+              "defaultValue": ""
+            }
+          },
+          "inputs": {},
+          "outputs": {
+            "stdout": {
+              "_className": "PortType",
+              "metas": {},
+              "name": "stdout"
+            },
+            "stderr": {
+              "_className": "PortType",
+              "metas": {},
+              "name": "stderr"
+            }
+          }
+        },
+        "LocalChannel:1": {
+          "_className": "ChannelType",
+          "metas": {
+            "description": {
+              "_className": "Value",
+              "metas": {},
+              "name": "description",
+              "value": "Kevoree channel that only sends messages to components in the same node"
+            }
+          },
+          "name": "LocalChannel",
+          "version": 1,
+          "deployUnits": {},
+          "dictionary": {
+            "delay": {
+              "_className": "ParamType",
+              "metas": {},
+              "name": "delay",
+              "fragmentDependant": false,
+              "datatype": "INT",
+              "defaultValue": "0"
+            }
+          }
+        }
+      },
+      "dus": {}
+    }
+  }
+}

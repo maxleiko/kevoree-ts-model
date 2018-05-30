@@ -44,6 +44,14 @@ export class Component extends Instance<ComponentType, Node> {
     keyUpdater(port, this._outputs);
   }
 
+  getInput(name: string): Port | undefined {
+    return this._inputs.get(name);
+  }
+
+  getOutput(name: string): Port | undefined {
+    return this._outputs.get(name);
+  }
+
   toJSON(key?: any) {
     return {
       ...super.toJSON(key),

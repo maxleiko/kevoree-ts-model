@@ -9,6 +9,7 @@ import {
   Port,
   Binding,
 } from '../src';
+import { loadFile, loadJSON } from './utils/load-fixture';
 
 describe('Deserialization', () => {
   const loader = new JSONKevoreeLoader();
@@ -135,6 +136,15 @@ describe('Deserialization', () => {
         },
       },
       namespaces: {},
+    });
+  });
+
+  it('deserial a json file', () => {
+    return Promise.all([
+      loadFile('new/local-channel-usecase.json'),
+      loadJSON('new/local-channel-usecase.json'),
+    ]).then(([str, json]) => {
+      expect(loader.parse(str).toJSON()).toEqual(json);
     });
   });
 });
