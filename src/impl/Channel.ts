@@ -45,9 +45,6 @@ export class Channel extends Instance<ChannelType, Model> {
         const binding = this.getByPath(path) as Binding | null;
         if (binding) {
           this.addBinding(binding);
-        } else {
-          // tslint:disable-next-line
-          console.log('UNABLE TO FIND BINDING', path);
         }
       });
     }

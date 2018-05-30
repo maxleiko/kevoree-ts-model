@@ -129,8 +129,8 @@ describe('Deserialization', () => {
           tdef: null,
           params: {},
           bindings: [
-            '/bindings[202065202]',
             '/bindings[90011873]',
+            '/bindings[202065202]',
           ],
         },
       },
